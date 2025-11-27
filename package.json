@@ -1,0 +1,51 @@
+{
+  "name": "@emailbuilder-v1/emailbuilder-v1",
+  "version": "1.0.0",
+  "description": "Complete email builder package - includes core, react, and all dependencies",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc && cp ../emailbuilder-v1-core/packages/react/src/*.css dist/ 2>/dev/null || true",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "email",
+    "builder",
+    "mjml",
+    "react",
+    "react-dnd",
+    "editor",
+    "drag-and-drop",
+    "email-editor"
+  ],
+  "author": "Actovision",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "dependencies": {
+    "@emailbuilder-v1/core": "^1.0.0",
+    "@emailbuilder-v1/react": "^1.0.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Actovision-ORG/emailbuilder-wrapper.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
