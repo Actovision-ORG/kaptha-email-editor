@@ -1,6 +1,6 @@
 {
   "name": "@actovision/emailbuilder-v1",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React wrapper for EmailBuilder v1 - Production-ready email builder with React DnD and MJML",
   "main": "dist/index.js",
   "module": "dist/index.js",
@@ -46,8 +46,8 @@
     "npm": ">=8.0.0"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.48",
