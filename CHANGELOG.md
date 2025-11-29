@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2025-11-29
+
+### Added
+- Comprehensive PropertyEditor controls for all 11 component types
+- Text controls: fontFamily, fontWeight, color, lineHeight, align
+- Button controls: backgroundColor, color, borderRadius, padding (vertical/horizontal), align
+- Image controls: src with upload modal, width, alt text, link URL, live preview
+- Divider controls: borderColor, borderWidth, style (solid/dashed/dotted)
+- Video controls: src, poster, width, height, align, controls checkbox
+- Timer controls: targetDate, format, expiredText, colors, alignment
+- HTML controls: code editor, align, padding, backgroundColor
+- Section controls: backgroundColor, padding
+- Columns advanced controls:
+  - Column count selector (2-4) with automatic content migration
+  - Quick layout presets (50-50, 70-30, 30-70, etc.) for all column counts
+  - Individual column width percentages with real-time validation
+  - Per-column settings: backgroundColor, padding, alignment
+- Social controls: alignment, icon size, platform management for 10+ platforms
+  - Supported platforms: Facebook, Twitter, Instagram, LinkedIn, YouTube, GitHub, Pinterest, TikTok, Snapchat, Reddit
+
+### Fixed
+- Resolved build errors preventing dev server from starting
+- Fixed corrupted PropertyEditor causing esbuild syntax errors
+- Corrected JSX structure in component property inputs
+- Ensured all property controls render without TypeScript errors
+
+### Changed
+- Enhanced property editor structure for better maintainability
+- Improved type safety across all component inputs
+- Optimized column preset system for better UX
+- Added validation feedback for column width totals
+
+---
+
+
 ## [1.0.5] - 2025-11-29
 
 ### Changed

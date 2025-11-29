@@ -16,10 +16,12 @@ A lightweight React component that loads EmailBuilder from CDN. Build beautiful,
 🔧 **TypeScript** - Full type safety included  
 🚀 **Efficient** - Share React across your app  
 🏷️ **11 Components** - Text, button, image, video, timer, HTML, divider, spacer, social, columns, section  
+✏️ **Advanced Property Controls** - Comprehensive editors for all component types with presets and validation  
 ↩️ **Undo/Redo** - Full history tracking with 50-state limit  
 🎨 **Design System** - Customizable color palettes and typography  
 💾 **Templates** - Pre-built templates (newsletter, welcome email)  
-📐 **Layout System** - Multi-column layouts (2-4 columns) and sections  
+📐 **Layout System** - Multi-column layouts (2-4 columns) with quick presets and per-column styling  
+🖼️ **Rich Media** - Image upload modal, video embeds, 10+ social platforms  
 
 ## Installation
 
