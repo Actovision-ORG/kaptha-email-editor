@@ -9,12 +9,12 @@ A lightweight React component that loads EmailBuilder from CDN. Build beautiful,
 
 ## Features
 
-✨ **CDN-Based** - Loads self-contained bundle from CDN (325KB)
-📦 **No External Dependencies** - React and ReactDOM bundled in
+✨ **CDN-Based** - Loads optimized bundle from CDN (181KB, 50KB gzipped)
+📦 **Small Bundle** - React external, only builder code included
 🎨 **Drag-and-Drop** - Intuitive email builder interface
 📧 **MJML Export** - Production-ready responsive emails
 🔧 **TypeScript** - Full type safety included
-🚀 **Self-Contained** - One script includes everything  
+🚀 **Efficient** - Share React across your app
 
 ## Installation
 
@@ -73,7 +73,7 @@ That's it! The component will automatically load the EmailBuilder from CDN.
 
 The component loads these resources automatically:
 
-- **JS**: https://static.gooups.dev/assets/builder.js
+- **JS**: https://static.gooups.dev/assets/builder.js (181KB, 50KB gzipped)
 - **CSS**: https://static.gooups.dev/assets/builder.css
 
 ## How It Works
@@ -87,9 +87,10 @@ This package:
 **Benefits:**
 - ✅ No large dependencies in your bundle
 - ✅ Fast loading from global CDN
-- ✅ Self-contained - no external React scripts needed
-- ✅ No version conflicts with your React
-- ✅ Always up-to-date with latest builder version
+- ✅ Uses your existing React installation
+- ✅ No React version conflicts
+- ✅ Smaller bundle size (44% reduction)
+- ✅ Better caching (React cached separately)
 - ✅ Simple React API
 
 ## Direct CDN Usage (No npm)
@@ -105,12 +106,16 @@ For plain HTML/JavaScript without npm:
 <body>
   <div id="root"></div>
 
-  <!-- Self-contained bundle - includes React, ReactDOM, and all dependencies (325KB) -->
+  <!-- Include React first -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+  <!-- Then EmailBuilder (181KB, 50KB gzipped) -->
   <script src="https://static.gooups.dev/assets/builder.js"></script>
 
   <script>
-    // No external React scripts needed - everything is bundled!
-    const { EmailBuilder, React, ReactDOM } = window.EmailBuilder;
+    // Uses global React and ReactDOM
+    const { EmailBuilder } = window.EmailBuilder;
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(React.createElement(EmailBuilder, {
@@ -148,6 +153,19 @@ const builder = (
 - Firefox (latest)
 - Safari (latest)
 - Edge (latest)
+
+## Bundle Size
+
+- **CDN Bundle**: 181KB (50KB gzipped) - excludes React/ReactDOM
+- **npm Package**: ~2KB wrapper + CDN loader
+- **Total**: Depends on your React version (typically ~130KB for React 18)
+
+**Why external React?**
+- Share React across multiple libraries
+- Use your preferred React version
+- Better browser caching
+- Smaller individual bundle sizes
+- Standard CDN pattern
 
 ## Source Code
 
