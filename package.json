@@ -1,6 +1,6 @@
 {
   "name": "@actovision/emailbuilder-v1",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React wrapper for EmailBuilder v1 - Production-ready email builder with React DnD and MJML",
   "main": "dist/index.js",
   "module": "dist/index.js",
