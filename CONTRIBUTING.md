@@ -1,4 +1,4 @@
-# Contributing to @emailbuilder-v1
+# Contributing to @kaptha/email-editor
 
 Thank you for your interest in contributing! We welcome contributions from the community.
 
@@ -6,8 +6,8 @@ Thank you for your interest in contributing! We welcome contributions from the c
 
 1. **Fork the repository**
    ```bash
-   git clone https://github.com/Actovision-ORG/emailbuilder-v1.git
-   cd emailbuilder-v1
+   git clone https://github.com/Actovision-ORG/kaptha-email-editor.git
+   cd kaptha-email-editor
    ```
 
 2. **Install dependencies**
@@ -108,7 +108,7 @@ Future contributions for automated testing are welcome!
 ## File Structure
 
 ```
-emailbuilder-v1/
+kaptha-email-editor/
 ├── src/
 │   └── index.ts          # Main entry point (re-exports)
 ├── dist/                 # Build output
@@ -120,11 +120,11 @@ emailbuilder-v1/
 ## Dependencies
 
 This package re-exports from:
-- `@emailbuilder-v1/core` - Core MJML functionality
-- `@emailbuilder-v1/react` - React components
+- `@kaptha/email-editor/core` - Core MJML functionality
+- `@kaptha/email-editor/react` - React components
 - `react-dnd` - Drag-and-drop library
 
-If you need to make changes to core functionality, those changes should be made in the [emailbuilder-v1-core](https://github.com/Actovision-ORG/emailbuilder-v1-core) monorepo.
+If you need to make changes to core functionality, those changes should be made in the [kaptha-email-editor-core](https://github.com/Actovision-ORG/kaptha-email-editor-core) monorepo.
 
 ## Reporting Issues
 
@@ -147,8 +147,8 @@ Include:
 
 ## Questions?
 
-- Open a [Discussion](https://github.com/Actovision-ORG/emailbuilder-v1/discussions)
-- Check existing [Issues](https://github.com/Actovision-ORG/emailbuilder-v1/issues)
+- Open a [Discussion](https://github.com/Actovision-ORG/kaptha-email-editor/discussions)
+- Check existing [Issues](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
 
 ## License
 

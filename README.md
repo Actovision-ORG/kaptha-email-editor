@@ -1,6 +1,6 @@
-# @actovision/emailbuilder-v1
+# @kaptha/email-editor
 
-[![npm version](https://badge.fury.io/js/%40emailbuilder-v1.svg)](https://www.npmjs.com/package/@actovision/emailbuilder-v1)
+[![npm version](https://badge.fury.io/js/%40kaptha-email-editor.svg)](https://www.npmjs.com/package/@kaptha/email-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > React wrapper for EmailBuilder v1 - Production-ready email builder with React DnD and MJML
@@ -26,13 +26,13 @@ A lightweight React component that loads EmailBuilder from CDN. Build beautiful,
 ## Installation
 
 ```bash
-npm install @actovision/emailbuilder-v1 react react-dom
+npm install @kaptha/email-editor react react-dom
 ```
 
 ## Quick Start
 
 ```tsx
-import EmailBuilder from '@actovision/emailbuilder-v1';
+import EmailBuilder from '@kaptha/email-editor';
 
 function App() {
   return (
@@ -65,7 +65,7 @@ That's it! The component will automatically load the EmailBuilder from CDN.
 
 **Example:**
 ```tsx
-import EmailBuilder from '@actovision/emailbuilder-v1';
+import EmailBuilder from '@kaptha/email-editor';
 
 function App() {
   const handleExport = (html: string, mjml: string) => {
@@ -142,8 +142,8 @@ The builder includes 11 pre-built components:
 
 The component loads these resources automatically:
 
-- **JS**: https://static.gooups.dev/assets/builder.js (181KB, 50KB gzipped)
-- **CSS**: https://static.gooups.dev/assets/builder.css
+- **JS**: https://code.kaptha.dev/core/editor.js (181KB, 50KB gzipped)
+- **CSS**: https://code.kaptha.dev/core/editor.css
 
 ## How It Works
 
@@ -170,7 +170,7 @@ For plain HTML/JavaScript without npm:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://static.gooups.dev/assets/builder.css">
+  <link rel="stylesheet" href="https://code.kaptha.dev/core/editor.css">
 </head>
 <body>
   <div id="root"></div>
@@ -180,7 +180,7 @@ For plain HTML/JavaScript without npm:
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   
   <!-- Then EmailBuilder (181KB, 50KB gzipped) -->
-  <script src="https://static.gooups.dev/assets/builder.js"></script>
+  <script src="https://code.kaptha.dev/core/editor.js"></script>
 
   <script>
     // Uses global React and ReactDOM
@@ -203,7 +203,7 @@ For plain HTML/JavaScript without npm:
 Full TypeScript definitions included:
 
 ```tsx
-import EmailBuilder from '@actovision/emailbuilder-v1';
+import EmailBuilder from '@kaptha/email-editor';
 
 // Props are fully typed
 const builder = (
@@ -243,10 +243,10 @@ const builder = (
 
 For direct package usage, API documentation, and advanced examples, see the core project:
 
-**Core Project**: https://github.com/Actovision-ORG/emailbuilder-v1-core
+**Core Project**: https://github.com/Actovision-ORG/kaptha-email-editor-core
 
 The core repository includes:
-- Individual package usage (`@emailbuilder-v1/core` and `@emailbuilder-v1/react`)
+- Individual package usage (`@kaptha/email-editor/core` and `@kaptha/email-editor/react`)
 - Advanced API documentation
 - Component customization examples
 - MJML converter usage
@@ -255,7 +255,7 @@ The core repository includes:
 
 ## Contributing
 
-Contributions welcome! Please read our [contributing guidelines](https://github.com/Actovision-ORG/emailbuilder-v1/blob/main/CONTRIBUTING.md).
+Contributions welcome! Please read our [contributing guidelines](https://github.com/Actovision-ORG/kaptha-email-editor/blob/main/CONTRIBUTING.md).
 
 ## License
 
@@ -263,13 +263,13 @@ MIT © [Actovision](https://github.com/Actovision-ORG)
 
 ## Support
 
-- 📖 [Documentation](https://github.com/Actovision-ORG/emailbuilder-v1-core)
-- 🐛 [Issue Tracker](https://github.com/Actovision-ORG/emailbuilder-v1/issues)
-- 💬 [Discussions](https://github.com/Actovision-ORG/emailbuilder-v1/discussions)
+- 📖 [Documentation](https://github.com/Actovision-ORG/kaptha-email-editor-core)
+- 🐛 [Issue Tracker](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
+- 💬 [Discussions](https://github.com/Actovision-ORG/kaptha-email-editor/discussions)
 
 ## Changelog
 
-See [CHANGELOG.md](https://github.com/Actovision-ORG/emailbuilder-v1/blob/main/CHANGELOG.md) for release history.
+See [CHANGELOG.md](https://github.com/Actovision-ORG/kaptha-email-editor/blob/main/CHANGELOG.md) for release history.
 
 ---
 
