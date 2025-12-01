@@ -21,7 +21,7 @@ A lightweight React component that loads EmailBuilder from CDN. Build beautiful,
 🎨 **Design System** - Customizable color palettes and typography  
 💾 **Templates** - Pre-built templates (newsletter, welcome email)  
 📐 **Layout System** - Multi-column layouts (2-4 columns) with quick presets and per-column styling  
-🖼️ **Rich Media** - Image upload modal, video embeds, 10+ social platforms  
+🖼️ **Rich Media** - Image upload modal, video embeds, 10+ social platforms
 
 ## Installation
 
@@ -238,20 +238,6 @@ const builder = (
 - Better browser caching
 - Smaller individual bundle sizes
 - Standard CDN pattern
-
-## Advanced Usage
-
-For direct package usage, API documentation, and advanced examples, see the core project:
-
-**Core Project**: https://github.com/Actovision-ORG/kaptha-email-editor-core
-
-The core repository includes:
-- Individual package usage (`@kaptha/email-editor/core` and `@kaptha/email-editor/react`)
-- Advanced API documentation
-- Component customization examples
-- MJML converter usage
-- Context hook documentation
-- Development and build instructions
 
 ## Contributing
 
