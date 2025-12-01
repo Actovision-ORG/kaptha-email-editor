@@ -39,7 +39,7 @@
     "template-builder",
     "responsive-email"
   ],
-  "author": "Actovision <contact@actovision.com>",
+  "author": "Actovision <hello@kaptha.com>",
   "license": "MIT",
   "engines": {
     "node": ">=16.0.0",
