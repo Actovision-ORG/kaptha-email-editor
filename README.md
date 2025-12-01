@@ -184,7 +184,7 @@ For plain HTML/JavaScript without npm:
 
   <script>
     // Uses global React and ReactDOM
-    const { EmailBuilder } = window.EmailBuilder;
+    const { EmailBuilder } = window.KapthaEmailEditor;
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
     root.render(React.createElement(EmailBuilder, {
