@@ -1,13 +1,12 @@
 /**
- * @emailbuilder-v1 - React Wrapper for EmailBuilder v1
+ * @kaptha/email-editor - React Wrapper for Kaptha Email Editor
  * 
- * This package provides a React component wrapper that loads EmailBuilder
+ * This package provides a React component wrapper that loads Kaptha Email Editor
  * from CDN.
  * 
  * @example
  * ```tsx
- * import EmailBuilder from '@emailbuilder-v1';
- * import '@emailbuilder-v1/styles.css';
+ * import EmailBuilder from '@kaptha/email-editor';
  * 
  * function App() {
  *   return (
@@ -25,8 +24,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 
-const CDN_JS_URL = 'https://static.gooups.dev/assets/builder.js';
-const CDN_CSS_URL = 'https://static.gooups.dev/assets/builder.css';
+const CDN_JS_URL = 'https://code.kaptha.dev/core/editor.js';
+const CDN_CSS_URL = 'https://code.kaptha.dev/core/editor.css';
 
 interface EmailBuilderProps {
   height?: string;
@@ -81,7 +80,7 @@ function loadScripts(): Promise<void> {
       });
     };
 
-    // Load EmailBuilder script
+    // Load Kaptha Email Editor script
     loadReact().then(() => {
       if (!document.querySelector(`script[src="${CDN_JS_URL}"]`)) {
         const script = document.createElement('script');
@@ -90,7 +89,7 @@ function loadScripts(): Promise<void> {
           scriptsLoaded = true;
           resolve();
         };
-        script.onerror = () => reject(new Error('Failed to load EmailBuilder'));
+        script.onerror = () => reject(new Error('Failed to load Kaptha Email Editor'));
         document.body.appendChild(script);
       } else {
         scriptsLoaded = true;
@@ -118,8 +117,8 @@ const EmailBuilder: React.FC<EmailBuilderProps> = ({ height = '600px', onExport,
   }, []);
 
   useEffect(() => {
-    if (isLoaded && containerRef.current && (window as any).EmailBuilder) {
-      const EmailBuilderComponent = (window as any).EmailBuilder.EmailBuilder;
+    if (isLoaded && containerRef.current && (window as any).KapthaEmailEditor) {
+      const EmailBuilderComponent = (window as any).KapthaEmailEditor.EmailBuilder;
       const root = (window as any).ReactDOM.createRoot(containerRef.current);
       
       root.render(
@@ -138,11 +137,11 @@ const EmailBuilder: React.FC<EmailBuilderProps> = ({ height = '600px', onExport,
   }, [isLoaded, height, onExport, initialTemplate, props]);
 
   if (error) {
-    return <div style={{ padding: '20px', color: 'red' }}>Error loading EmailBuilder: {error}</div>;
+    return <div style={{ padding: '20px', color: 'red' }}>Error loading Kaptha Email Editor: {error}</div>;
   }
 
   if (!isLoaded) {
-    return <div style={{ padding: '20px' }}>Loading EmailBuilder...</div>;
+    return <div style={{ padding: '20px' }}>Loading Kaptha Email Editor...</div>;
   }
 
   return <div ref={containerRef} style={{ height }} />;
@@ -155,6 +154,6 @@ declare global {
   interface Window {
     React: any;
     ReactDOM: any;
-    EmailBuilder: any;
+    KapthaEmailEditor: any;
   }
 }

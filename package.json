@@ -1,5 +1,5 @@
 {
-  "name": "@actovision/emailbuilder-v1",
+  "name": "@kaptha/email-editor",
   "version": "1.0.6",
   "description": "React wrapper for EmailBuilder v1 - Production-ready email builder with React DnD and MJML",
   "main": "dist/index.js",
@@ -56,12 +56,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Actovision-ORG/emailbuilder-v1.git"
+    "url": "git+https://github.com/Actovision-ORG/kaptha-email-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/Actovision-ORG/emailbuilder-v1/issues"
+    "url": "https://github.com/Actovision-ORG/kaptha-email-editor/issues"
   },
-  "homepage": "https://github.com/Actovision-ORG/emailbuilder-v1#readme",
+  "homepage": "https://github.com/Actovision-ORG/kaptha-email-editor#readme",
   "publishConfig": {
     "access": "public"
   }
