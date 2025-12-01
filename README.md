@@ -3,9 +3,9 @@
 [![npm version](https://badge.fury.io/js/%40kaptha-email-editor.svg)](https://www.npmjs.com/package/@kaptha/email-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-> React wrapper for EmailBuilder v1 - Production-ready email builder with React DnD and MJML
+> React wrapper for EmailEditor v1 - Production-ready email builder with React DnD and MJML
 
-A lightweight React component that loads EmailBuilder from CDN. Build beautiful, responsive email templates with drag-and-drop functionality.
+A lightweight React component that loads EmailEditor from CDN. Build beautiful, responsive email templates with drag-and-drop functionality.
 
 ## Features
 
@@ -32,11 +32,11 @@ npm install @kaptha/email-editor react react-dom
 ## Quick Start
 
 ```tsx
-import EmailBuilder from '@kaptha/email-editor';
+import EmailEditor from '@kaptha/email-editor';
 
 function App() {
   return (
-    <EmailBuilder 
+    <EmailEditor 
       height="100vh"
       onExport={(html, mjml) => {
         console.log('HTML:', html);
@@ -49,11 +49,11 @@ function App() {
 export default App;
 ```
 
-That's it! The component will automatically load the EmailBuilder from CDN.
+That's it! The component will automatically load the EmailEditor from CDN.
 
 ## API
 
-### `<EmailBuilder>`
+### `<EmailEditor>`
 
 **Props:**
 - `height?: string` - Builder height (default: `"600px"`)
@@ -65,7 +65,7 @@ That's it! The component will automatically load the EmailBuilder from CDN.
 
 **Example:**
 ```tsx
-import EmailBuilder from '@kaptha/email-editor';
+import EmailEditor from '@kaptha/email-editor';
 
 function App() {
   const handleExport = (html: string, mjml: string) => {
@@ -80,7 +80,7 @@ function App() {
   };
 
   return (
-    <EmailBuilder
+    <EmailEditor
       height="100vh"
       onExport={handleExport}
       onSave={handleSave}
@@ -148,7 +148,7 @@ The component loads these resources automatically:
 ## How It Works
 
 This package:
-1. Loads the EmailBuilder script from CDN on mount
+1. Loads the EmailEditor script from CDN on mount
 2. Injects the CSS automatically
 3. Renders the builder in your React app
 4. Provides TypeScript definitions
@@ -179,15 +179,15 @@ For plain HTML/JavaScript without npm:
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   
-  <!-- Then EmailBuilder (181KB, 50KB gzipped) -->
+  <!-- Then EmailEditor (181KB, 50KB gzipped) -->
   <script src="https://code.kaptha.dev/core/editor.js"></script>
 
   <script>
     // Uses global React and ReactDOM
-    const { EmailBuilder } = window.KapthaEmailEditor;
+    const { EmailEditor } = window.KapthaEmailEditor;
 
     const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(EmailBuilder, {
+    root.render(React.createElement(EmailEditor, {
       height: '100vh',
       onExport: (html, mjml) => {
         console.log('Exported:', html, mjml);
@@ -203,11 +203,11 @@ For plain HTML/JavaScript without npm:
 Full TypeScript definitions included:
 
 ```tsx
-import EmailBuilder from '@kaptha/email-editor';
+import EmailEditor from '@kaptha/email-editor';
 
 // Props are fully typed
 const builder = (
-  <EmailBuilder
+  <EmailEditor
     height="100vh"
     onExport={(html: string, mjml: string) => {
       // Typed parameters

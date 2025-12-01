@@ -6,11 +6,11 @@
  * 
  * @example
  * ```tsx
- * import EmailBuilder from '@kaptha/email-editor';
+ * import EmailEditor from '@kaptha/email-editor';
  * 
  * function App() {
  *   return (
- *     <EmailBuilder
+ *     <EmailEditor
  *       height="100vh"
  *       onExport={(html, mjml) => {
  *         console.log('HTML:', html);
@@ -27,7 +27,7 @@ import React, { useEffect, useRef, useState } from 'react';
 const CDN_JS_URL = 'https://code.kaptha.dev/core/editor.js';
 const CDN_CSS_URL = 'https://code.kaptha.dev/core/editor.css';
 
-interface EmailBuilderProps {
+interface EmailEditorProps {
   height?: string;
   onExport?: (html: string, mjml: string) => void;
   initialTemplate?: any;
@@ -101,7 +101,7 @@ function loadScripts(): Promise<void> {
   return scriptPromise;
 }
 
-const EmailBuilder: React.FC<EmailBuilderProps> = ({ height = '600px', onExport, initialTemplate, ...props }) => {
+const EmailEditor: React.FC<EmailEditorProps> = ({ height = '600px', onExport, initialTemplate, ...props }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -118,11 +118,11 @@ const EmailBuilder: React.FC<EmailBuilderProps> = ({ height = '600px', onExport,
 
   useEffect(() => {
     if (isLoaded && containerRef.current && (window as any).KapthaEmailEditor) {
-      const EmailBuilderComponent = (window as any).KapthaEmailEditor.EmailBuilder;
+      const EmailEditorComponent = (window as any).KapthaEmailEditor.EmailEditor;
       const root = (window as any).ReactDOM.createRoot(containerRef.current);
       
       root.render(
-        (window as any).React.createElement(EmailBuilderComponent, {
+        (window as any).React.createElement(EmailEditorComponent, {
           height,
           onExport,
           initialTemplate,
@@ -147,7 +147,7 @@ const EmailBuilder: React.FC<EmailBuilderProps> = ({ height = '600px', onExport,
   return <div ref={containerRef} style={{ height }} />;
 };
 
-export default EmailBuilder;
+export default EmailEditor;
 
 // Type definitions for window
 declare global {

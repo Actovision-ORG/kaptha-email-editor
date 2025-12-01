@@ -53,7 +53,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking CDN Change**: React and ReactDOM are now external dependencies
 - CDN bundle size reduced by 44%: 321KB → 181KB (95KB → 50KB gzipped)
 - Updated documentation to reflect new CDN usage pattern requiring React scripts
-- CDN users must now include React and ReactDOM scripts before EmailBuilder
+- CDN users must now include React and ReactDOM scripts before EmailEditor
 
 ### Added
 - Bundle size comparison section in README
@@ -70,13 +70,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Migration Guide
 **For npm users**: No changes required - continues to work the same way
 
-**For CDN users**: Add React scripts before EmailBuilder:
+**For CDN users**: Add React scripts before EmailEditor:
 ```html
-<!-- Add these BEFORE the EmailBuilder script -->
+<!-- Add these BEFORE the EmailEditor script -->
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
 <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
 
-<!-- Then EmailBuilder -->
+<!-- Then EmailEditor -->
 <script src="https://code.kaptha.dev/core/editor.js"></script>
 ```
 
@@ -109,7 +109,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial release
-- React wrapper component that loads EmailBuilder from CDN
+- React wrapper component that loads EmailEditor from CDN
 - TypeScript definitions
 - Automatic CDN script loading
 - Support for custom props (height, onExport, initialTemplate)
