@@ -1,4 +1,4 @@
-# Contributing to @kaptha/email-editor
+# Contributing to @actovision/kaptha-email-editor
 
 Thank you for your interest in contributing! We welcome contributions from the community.
 
@@ -120,8 +120,8 @@ kaptha-email-editor/
 ## Dependencies
 
 This package re-exports from:
-- `@kaptha/email-editor/core` - Core MJML functionality
-- `@kaptha/email-editor/react` - React components
+- `@actovision/kaptha-email-editor/core` - Core MJML functionality
+- `@actovision/kaptha-email-editor/react` - React components
 - `react-dnd` - Drag-and-drop library
 
 If you need to make changes to core functionality, those changes should be made in the [kaptha-email-editor-core](https://github.com/Actovision-ORG/kaptha-email-editor-core) monorepo.

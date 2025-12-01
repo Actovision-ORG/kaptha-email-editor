@@ -1,6 +1,6 @@
-# @kaptha/email-editor
+# @actovision/kaptha-email-editor
 
-[![npm version](https://badge.fury.io/js/%40kaptha-email-editor.svg)](https://www.npmjs.com/package/@kaptha/email-editor)
+[![npm version](https://badge.fury.io/js/%40kaptha-email-editor.svg)](https://www.npmjs.com/package/@actovision/kaptha-email-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 > React wrapper for EmailEditor v1 - Production-ready email builder with React DnD and MJML
@@ -26,13 +26,13 @@ A lightweight React component that loads EmailEditor from CDN. Build beautiful, 
 ## Installation
 
 ```bash
-npm install @kaptha/email-editor react react-dom
+npm install @actovision/kaptha-email-editor react react-dom
 ```
 
 ## Quick Start
 
 ```tsx
-import EmailEditor from '@kaptha/email-editor';
+import EmailEditor from '@actovision/kaptha-email-editor';
 
 function App() {
   return (
@@ -65,7 +65,7 @@ That's it! The component will automatically load the EmailEditor from CDN.
 
 **Example:**
 ```tsx
-import EmailEditor from '@kaptha/email-editor';
+import EmailEditor from '@actovision/kaptha-email-editor';
 
 function App() {
   const handleExport = (html: string, mjml: string) => {
@@ -203,7 +203,7 @@ For plain HTML/JavaScript without npm:
 Full TypeScript definitions included:
 
 ```tsx
-import EmailEditor from '@kaptha/email-editor';
+import EmailEditor from '@actovision/kaptha-email-editor';
 
 // Props are fully typed
 const builder = (
