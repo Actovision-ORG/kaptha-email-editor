@@ -22,11 +22,12 @@
  * ```
  */
 
-import React, { useEffect, useRef, useState } from 'react';
-import ReactDOM from 'react-dom/client';
+import * as React from 'react';
+import { useEffect, useRef, useState } from 'react';
+import * as ReactDOM from 'react-dom/client';
 
-const CDN_JS_URL = 'https://code.kaptha.dev/core/editor.js';
-const CDN_CSS_URL = 'https://code.kaptha.dev/core/editor.css';
+const CDN_JS_URL = process.env.KAPTHA_EDITOR_JS_URL || 'https://code.kaptha.dev/core/editor.js';
+const CDN_CSS_URL = process.env.KAPTHA_EDITOR_CSS_URL || 'https://code.kaptha.dev/core/editor.css';
 
 interface EmailEditorProps {
   height?: string;
@@ -37,6 +38,12 @@ interface EmailEditorProps {
 
 let scriptsLoaded = false;
 let scriptPromise: Promise<void> | null = null;
+
+// Make React and ReactDOM available globally for the CDN script
+if (typeof window !== 'undefined') {
+  (window as any).React = React;
+  (window as any).ReactDOM = ReactDOM;
+}
 
 function loadScripts(): Promise<void> {
   if (scriptsLoaded) {
@@ -54,12 +61,6 @@ function loadScripts(): Promise<void> {
       link.rel = 'stylesheet';
       link.href = CDN_CSS_URL;
       document.head.appendChild(link);
-    }
-
-    // Make React and ReactDOM available globally for the CDN script
-    if (typeof window !== 'undefined') {
-      (window as any).React = React;
-      (window as any).ReactDOM = ReactDOM;
     }
 
     // Load Kaptha Email Editor script
@@ -88,21 +89,29 @@ const EmailEditor: React.FC<EmailEditorProps> = ({ height = '600px', onExport, i
 
   useEffect(() => {
     loadScripts()
-      .then(() => {
-        setIsLoaded(true);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
+      .then(() => setIsLoaded(true))
+      .catch((err) => setError(err.message));
   }, []);
 
   useEffect(() => {
-    if (isLoaded && containerRef.current && (window as any).KapthaEmailEditor) {
+    if (isLoaded && containerRef.current) {
+      if (!(window as any).KapthaEmailEditor) {
+        setError('Email editor library not loaded');
+        return;
+      }
+      
       const EmailEditorComponent = (window as any).KapthaEmailEditor.EmailEditor;
-      const root = ReactDOM.createRoot(containerRef.current);
+      
+      if (!EmailEditorComponent) {
+        const availableKeys = Object.keys((window as any).KapthaEmailEditor).join(', ');
+        setError(`EmailEditor not found. Available exports: ${availableKeys}`);
+        return;
+      }
+      
+      const root = (ReactDOM as any).createRoot(containerRef.current);
       
       root.render(
-        React.createElement(EmailEditorComponent, {
+        (React as any).createElement(EmailEditorComponent, {
           height,
           onExport,
           initialTemplate,

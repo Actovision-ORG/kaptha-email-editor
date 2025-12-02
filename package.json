@@ -3,13 +3,14 @@
   "version": "1.0.5",
   "description": "React wrapper for Kaptha Email Editor - Production-ready email builder with React DnD and MJML",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.js",
+      "import": "./dist/index.mjs",
       "require": "./dist/index.js",
-      "default": "./dist/index.js"
+      "default": "./dist/index.mjs"
     }
   },
   "sideEffects": false,
@@ -20,8 +21,8 @@
     "CHANGELOG.md"
   ],
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "tsup",
+    "dev": "tsup --watch",
     "clean": "rm -rf dist",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -61,9 +62,10 @@
     "@types/react-dom": "^19.0.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
     "ts-jest": "^29.1.1",
+    "tsup": "^8.5.1",
     "typescript": "^5.3.3"
   },
   "repository": {
