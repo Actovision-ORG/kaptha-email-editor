@@ -65,7 +65,34 @@ npm run build
 npm start
 ```
 
+## Testing
+
+### E2E Tests with Cypress
+
+Run Cypress in interactive mode:
+```bash
+npm run test:e2e
+```
+
+Run Cypress in headless mode (CI):
+```bash
+npm run test:e2e:ci
+```
+
+**Test Coverage:**
+- Next.js App Router compatibility
+- Client component rendering
+- Editor loading and initialization
+- Hydration handling
+- Error handling and edge cases
+- Responsive design across viewports
+
+### Running Tests in CI
+
+The tests automatically run in GitHub Actions on push and pull requests. Videos and screenshots are saved as artifacts when tests fail.
+
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Kaptha Email Editor](https://github.com/Actovision-ORG/kaptha-email-editor)
+- [Cypress Documentation](https://docs.cypress.io)

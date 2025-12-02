@@ -60,3 +60,28 @@ npm run build
 ```bash
 npm run preview
 ```
+
+## Testing
+
+### E2E Tests with Cypress
+
+Run Cypress in interactive mode:
+```bash
+npm run test:e2e
+```
+
+Run Cypress in headless mode (CI):
+```bash
+npm run test:e2e:ci
+```
+
+**Test Coverage:**
+- Editor loading and initialization
+- External script and style loading
+- Error handling and edge cases
+- Responsive design across viewports
+- React integration and global object exposure
+
+### Running Tests in CI
+
+The tests automatically run in GitHub Actions on push and pull requests. Videos and screenshots are saved as artifacts when tests fail.

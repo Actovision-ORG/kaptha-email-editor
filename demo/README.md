@@ -86,3 +86,35 @@ For more information, visit the [main repository](https://github.com/Actovision-
 
 - GitHub Issues: [Report a bug](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
 - Email: hello@kaptha.com
+
+## Testing
+
+Both demos include comprehensive E2E tests using Cypress:
+
+### Running Tests Locally
+
+**React Demo:**
+```bash
+cd react
+npm run test:e2e        # Interactive mode
+npm run test:e2e:ci     # Headless mode
+```
+
+**Next.js Demo:**
+```bash
+cd nextjs
+npm run test:e2e        # Interactive mode
+npm run test:e2e:ci     # Headless mode
+```
+
+### CI/CD
+
+Tests run automatically on GitHub Actions for all pull requests and commits to main. Test videos and screenshots are saved as artifacts for debugging failures.
+
+**Test Coverage:**
+- ✅ Editor loading and initialization
+- ✅ CDN script and stylesheet loading
+- ✅ Error handling and recovery
+- ✅ Responsive design validation
+- ✅ React/Next.js integration
+- ✅ Client-side rendering verification
