@@ -17,6 +17,9 @@ node_modules/
 CONTEXT.md
 SETUP.md
 
+# Demo applications
+demo/
+
 # CI/CD
 .github/
 

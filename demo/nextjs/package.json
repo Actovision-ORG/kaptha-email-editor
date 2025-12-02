@@ -1,0 +1,24 @@
+{
+  "name": "kaptha-email-editor-nextjs-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Next.js demo for @actovision/kaptha-email-editor",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@actovision/kaptha-email-editor": "^1.0.3",
+    "next": "^14.0.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.6",
+    "@types/react": "^18.2.48",
+    "@types/react-dom": "^18.2.18",
+    "typescript": "^5.3.3"
+  }
+}
