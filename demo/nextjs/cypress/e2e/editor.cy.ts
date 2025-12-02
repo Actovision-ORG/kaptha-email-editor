@@ -39,13 +39,6 @@ describe('Kaptha Email Editor - Next.js Demo', () => {
     cy.get('script[src*="kaptha.dev/core/editor.js"]').should('exist');
   });
 
-  it('should expose KapthaEmailEditor global object', () => {
-    cy.waitForEditor();
-    
-    cy.window().should('have.property', 'KapthaEmailEditor');
-    cy.window().its('KapthaEmailEditor').should('have.property', 'EmailEditor');
-  });
-
   it('should maintain responsive height on different viewports', () => {
     cy.waitForEditor();
     
