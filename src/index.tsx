@@ -23,6 +23,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom/client';
 
 const CDN_JS_URL = 'https://code.kaptha.dev/core/editor.js';
 const CDN_CSS_URL = 'https://code.kaptha.dev/core/editor.css';
@@ -55,47 +56,26 @@ function loadScripts(): Promise<void> {
       document.head.appendChild(link);
     }
 
-    // Load React dependencies if not already loaded
-    const loadReact = () => {
-      return new Promise<void>((resolveReact) => {
-        if (window.React && window.ReactDOM) {
-          resolveReact();
-          return;
-        }
-
-        const reactScript = document.createElement('script');
-        reactScript.src = 'https://unpkg.com/react@18/umd/react.production.min.js';
-        reactScript.crossOrigin = 'anonymous';
-        
-        const reactDomScript = document.createElement('script');
-        reactDomScript.src = 'https://unpkg.com/react-dom@18/umd/react-dom.production.min.js';
-        reactDomScript.crossOrigin = 'anonymous';
-
-        reactScript.onload = () => {
-          reactDomScript.onload = () => resolveReact();
-          document.body.appendChild(reactDomScript);
-        };
-
-        document.body.appendChild(reactScript);
-      });
-    };
+    // Make React and ReactDOM available globally for the CDN script
+    if (typeof window !== 'undefined') {
+      (window as any).React = React;
+      (window as any).ReactDOM = ReactDOM;
+    }
 
     // Load Kaptha Email Editor script
-    loadReact().then(() => {
-      if (!document.querySelector(`script[src="${CDN_JS_URL}"]`)) {
-        const script = document.createElement('script');
-        script.src = CDN_JS_URL;
-        script.onload = () => {
-          scriptsLoaded = true;
-          resolve();
-        };
-        script.onerror = () => reject(new Error('Failed to load Kaptha Email Editor'));
-        document.body.appendChild(script);
-      } else {
+    if (!document.querySelector(`script[src="${CDN_JS_URL}"]`)) {
+      const script = document.createElement('script');
+      script.src = CDN_JS_URL;
+      script.onload = () => {
         scriptsLoaded = true;
         resolve();
-      }
-    });
+      };
+      script.onerror = () => reject(new Error('Failed to load Kaptha Email Editor'));
+      document.body.appendChild(script);
+    } else {
+      scriptsLoaded = true;
+      resolve();
+    }
   });
 
   return scriptPromise;
@@ -119,10 +99,10 @@ const EmailEditor: React.FC<EmailEditorProps> = ({ height = '600px', onExport, i
   useEffect(() => {
     if (isLoaded && containerRef.current && (window as any).KapthaEmailEditor) {
       const EmailEditorComponent = (window as any).KapthaEmailEditor.EmailEditor;
-      const root = (window as any).ReactDOM.createRoot(containerRef.current);
+      const root = ReactDOM.createRoot(containerRef.current);
       
       root.render(
-        (window as any).React.createElement(EmailEditorComponent, {
+        React.createElement(EmailEditorComponent, {
           height,
           onExport,
           initialTemplate,
