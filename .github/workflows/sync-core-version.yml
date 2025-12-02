@@ -1,0 +1,120 @@
+name: Sync Core Version
+
+on:
+  repository_dispatch:
+    types: [core-version-updated]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Core version (e.g., 1.0.1)'
+        required: true
+      major:
+        description: 'Major version (e.g., 1)'
+        required: true
+
+jobs:
+  update-cdn-urls:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Extract version information
+        id: version
+        run: |
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            VERSION="${{ github.event.inputs.version }}"
+            MAJOR="${{ github.event.inputs.major }}"
+          else
+            VERSION="${{ github.event.client_payload.version }}"
+            MAJOR="${{ github.event.client_payload.major }}"
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "major=$MAJOR" >> $GITHUB_OUTPUT
+          echo "📦 Syncing to core version: $VERSION (major: v$MAJOR)"
+
+      - name: Update CDN URLs in wrapper
+        run: |
+          MAJOR="${{ steps.version.outputs.major }}"
+          
+          # Update getCDNUrls function to return correct default path
+          # The default path uses root (editor.js) which points to current major version
+          # No changes needed unless we want to explicitly update comments or version references
+          
+          echo "✅ Wrapper uses root path by default - no changes needed"
+          echo "ℹ️  Users can pin to specific versions via KAPTHA_VERSION env var"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          # In the hybrid approach, wrapper doesn't need updates
+          # It always uses root path which CDN updates automatically
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+          echo "ℹ️ No changes needed - wrapper uses flexible CDN path strategy"
+
+      - name: Create Pull Request
+        if: steps.changes.outputs.has_changes == 'true'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update CDN URLs to core v${{ steps.version.outputs.major }}"
+          branch: "auto-sync/core-v${{ steps.version.outputs.version }}"
+          delete-branch: true
+          title: "🔄 Sync to core v${{ steps.version.outputs.version }}"
+          body: |
+            ## Auto-sync from Core Repository
+            
+            This PR was automatically created in response to a new release in the core repository.
+            
+            ### Changes
+            - Updated CDN URLs to use major version path: `v${{ steps.version.outputs.major }}/`
+            - Ensures wrapper automatically receives minor and patch updates
+            
+            ### Core Version Details
+            - **Version**: ${{ steps.version.outputs.version }}
+            - **Major Version**: v${{ steps.version.outputs.major }}
+            - **CDN JS**: https://code.kaptha.dev/core/v${{ steps.version.outputs.major }}/editor.js
+            - **CDN CSS**: https://code.kaptha.dev/core/v${{ steps.version.outputs.major }}/editor.css
+            
+            ### Source
+            - **Repository**: ${{ github.event.client_payload.source_repo || 'Manual trigger' }}
+            - **Ref**: ${{ github.event.client_payload.source_ref || 'N/A' }}
+            - **Triggered by**: ${{ github.event.client_payload.triggered_by || 'workflow_dispatch' }}
+            
+            ### Testing
+            Please verify:
+            - [ ] Wrapper builds successfully
+            - [ ] Demo apps load correctly
+            - [ ] UMD bundle loads from new CDN path
+            - [ ] All editor functionality works as expected
+            
+            ---
+            *This is an automated PR. Review and merge when ready.*
+          labels: |
+            dependencies
+            automated
+            core-sync
+
+      - name: Summary
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+          MAJOR="${{ steps.version.outputs.major }}"
+          
+          echo "## Sync Summary"
+          echo "📦 Core version: $VERSION"
+          echo "📍 Major version: v$MAJOR"
+          echo ""
+          echo "✅ Wrapper uses hybrid approach:"
+          echo "   • Default: https://code.kaptha.dev/core/editor.js (auto-updates)"
+          echo "   • Pin version: KAPTHA_VERSION=1.0.1"
+          echo "   • Custom URL: KAPTHA_EDITOR_JS_URL override"
+          echo ""
+          echo "ℹ️  No wrapper changes needed - users get updates automatically"

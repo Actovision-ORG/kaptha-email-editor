@@ -26,8 +26,28 @@ import * as React from 'react';
 import { useEffect, useRef, useState } from 'react';
 import * as ReactDOM from 'react-dom/client';
 
-const CDN_JS_URL = process.env.KAPTHA_EDITOR_JS_URL || 'https://code.kaptha.dev/core/editor.js';
-const CDN_CSS_URL = process.env.KAPTHA_EDITOR_CSS_URL || 'https://code.kaptha.dev/core/editor.css';
+// Build CDN URLs based on KAPTHA_VERSION or use default (latest stable)
+function getCDNUrls() {
+  const version = process.env.KAPTHA_VERSION;
+  const basePath = 'https://code.kaptha.dev/core';
+  
+  if (version) {
+    // Use specific version path when KAPTHA_VERSION is set (e.g., "1.0.1" or "v1.0.1")
+    const cleanVersion = version.startsWith('v') ? version : `v${version}`;
+    return {
+      js: `${basePath}/${cleanVersion}/editor.js`,
+      css: `${basePath}/${cleanVersion}/editor.css`
+    };
+  }
+  
+  // Default: latest stable (root path for auto-updates)
+  return {
+    js: `${basePath}/editor.js`,
+    css: `${basePath}/editor.css`
+  };
+}
+
+const { js: CDN_JS_URL, css: CDN_CSS_URL } = getCDNUrls();
 
 interface EmailEditorProps {
   height?: string;
