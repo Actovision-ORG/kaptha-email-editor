@@ -15,7 +15,9 @@ describe('Error Handling', () => {
     cy.contains('Kaptha Email Editor - React Demo').should('be.visible');
     
     // Should have proper structure
-    cy.get('.container').should('exist');
+    cy.get('.App').should('exist');
+    cy.get('header').should('be.visible');
+    cy.get('main').should('be.visible');
   });
 
   it('should load without console errors', () => {
