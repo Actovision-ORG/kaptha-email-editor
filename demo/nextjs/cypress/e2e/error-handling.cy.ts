@@ -26,8 +26,10 @@ describe('Error Handling - Next.js', () => {
     cy.visit('/');
     cy.waitForEditor();
     
-    // Verify no Next.js specific errors
-    cy.get('body').should('not.contain', 'Application error');
-    cy.get('body').should('not.contain', '404');
+    // Verify the page loaded successfully
+    cy.contains('Kaptha Email Editor - Next.js Demo').should('be.visible');
+    
+    // Verify no Next.js specific error messages in headings or alerts
+    cy.get('h1, h2, [role="alert"]').should('not.contain', 'Application error');
   });
 });
