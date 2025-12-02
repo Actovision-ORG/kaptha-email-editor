@@ -1,6 +1,6 @@
 {
   "name": "@actovision/kaptha-email-editor",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "React wrapper for Kaptha Email Editor - Production-ready email builder with React DnD and MJML",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
