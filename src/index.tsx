@@ -185,6 +185,18 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
   const editorIdRef = useRef<string>(`kaptha-editor-${Math.random().toString(36).substr(2, 9)}`);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Use refs to store latest callback values to avoid editor re-initialization
+  // when callbacks change (prevents issues when parent doesn't memoize callbacks)
+  const onLoadRef = useRef(onLoad);
+  const onReadyRef = useRef(onReady);
+  const onDesignChangeRef = useRef(onDesignChange);
+  
+  useEffect(() => {
+    onLoadRef.current = onLoad;
+    onReadyRef.current = onReady;
+    onDesignChangeRef.current = onDesignChange;
+  });
 
   // Expose editor methods via ref
   useImperativeHandle(ref, () => ({
@@ -232,18 +244,18 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
         ...(workspaceId && { workspaceId }),
         ...(minHeight && { minHeight }),
         ...(displayMode && { displayMode }),
-        ...(onLoad && { onLoad }),
+        ...(onLoadRef.current && { onLoad: onLoadRef.current }),
         onReady: () => {
           // Load initial design after editor is ready
           if (initialDesign) {
             editor.loadDesign(initialDesign);
           }
           // Call user's onReady callback
-          if (onReady) {
-            onReady();
+          if (onReadyRef.current) {
+            onReadyRef.current();
           }
         },
-        ...(onDesignChange && { onDesignChange })
+        ...(onDesignChangeRef.current && { onDesignChange: onDesignChangeRef.current })
       });
 
       editorInstanceRef.current = editor;
@@ -258,7 +270,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
         editorInstanceRef.current = null;
       }
     };
-  }, [isLoaded, apiKey, workspaceId, minHeight, displayMode, onLoad, onReady, onDesignChange, initialDesign]);
+  }, [isLoaded, apiKey, workspaceId, minHeight, displayMode, initialDesign]);
 
   if (error) {
     return (
