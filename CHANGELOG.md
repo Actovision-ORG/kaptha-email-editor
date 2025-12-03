@@ -36,7 +36,7 @@ This is a major architecture overhaul following industry best practices. The wra
 
 5. **React Version Compatibility**:
    - OLD: `^18.0.0 || ^19.0.0`
-   - NEW: `>=18.0.0` (forward compatible)
+   - NEW: `^18.0.0 || ^19.0.0` (tested with both React 18 and 19)
 
 #### Migration Guide
 
@@ -116,6 +116,10 @@ const handleExport = async () => {
 - **Export Pattern**: Named export + default export
 - **React Compatibility**: Forward compatible with >=18.0.0
 - **CDN Paths**: `editor.js` → `builder.js`, `editor.css` → `builder.css`
+
+### React 19 Compatibility
+
+This version has been tested with React 19.2.0 and uses stable APIs (`forwardRef`, `useImperativeHandle`) that work correctly in both React 18 and 19. The peer dependency explicitly supports both versions: `^18.0.0 || ^19.0.0`.
 
 ### Benefits of New Architecture
 

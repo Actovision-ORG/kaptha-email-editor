@@ -125,14 +125,54 @@ NEW: https://code.kaptha.dev/core/builder.css
   "react-dom": "^18.0.0 || ^19.0.0"
 }
 
-// NEW
+// NEW (v2.0.0)
 "peerDependencies": {
-  "react": ">=18.0.0",
-  "react-dom": ">=18.0.0"
+  "react": "^18.0.0 || ^19.0.0",
+  "react-dom": "^18.0.0 || ^19.0.0"
 }
 ```
 
-## Files Modified
+**Note:** Tested with both React 18 and React 19.2.0. Uses stable APIs (`forwardRef`, `useImperativeHandle`) that work correctly in both versions.
+
+### 7. Version Pinning (Optional)
+
+The wrapper now supports pinning to specific core versions via the `KAPTHA_VERSION` environment variable:
+
+**Default behavior (Auto-updates):**
+```bash
+# Uses root CDN path - automatically gets latest stable version
+npm run build
+# Loads: https://code.kaptha.dev/core/builder.js
+```
+
+**Pin to specific version:**
+```bash
+# Pin to exact version for stability
+KAPTHA_VERSION=1.0.1 npm run build
+# Loads: https://code.kaptha.dev/core/v1.0.1/builder.js
+
+# Can also use with 'v' prefix
+KAPTHA_VERSION=v1.0.1 npm run build
+# Loads: https://code.kaptha.dev/core/v1.0.1/builder.js
+```
+
+**Use cases for pinning:**
+- 🔒 **Production stability** - Lock to tested version
+- 🧪 **Testing** - Verify against specific core version
+- 🐛 **Rollback** - Revert to previous version if issues arise
+- 📦 **Reproducible builds** - Same version across environments
+
+**Example in package.json:**
+```json
+{
+  "scripts": {
+    "build": "KAPTHA_VERSION=1.0.1 next build",
+    "build:latest": "next build"
+  }
+}
+```
+
+## Migration Examples
 
 1. **src/index.tsx** (Complete rewrite)
    - Implements framework-agnostic API usage

@@ -18,11 +18,12 @@ A lightweight React component that loads Kaptha Email Editor from CDN using a cl
 - **📧 MJML Export** - Production-ready responsive emails
 - **🔧 TypeScript** - Full type safety included
 - **🚀 Efficient** - Share React across your app
-- **⚡ Forward Compatible** - Supports React >=18.0.0
+- **⚡ React 18 & 19** - Tested with both React 18 and 19
 
 ## 📋 Requirements
 
-- React >=18.0.0
+- React ^18.0.0 || ^19.0.0
+- React DOM ^18.0.0 || ^19.0.0
 - API key (get yours at: hello@kaptha.com)
 
 ## 📦 Installation
@@ -70,7 +71,7 @@ export default App;
 
 You can start building immediately with our free development key:
 
-```
+```text
 kpt_dev_ws001_demo12345678
 ```
 
@@ -82,7 +83,7 @@ kpt_dev_ws001_demo12345678
 
 ### Get Your Own API Key
 
-For production use and custom domain restrictions, contact us at: **hello@kaptha.com**
+For production use and custom domain restrictions, contact us at: **[hello@kaptha.com](mailto:hello@kaptha.com)**
 
 API keys follow this format: `kpt_{tier}_ws{workspaceId}_{hash}`
 
@@ -255,6 +256,60 @@ This package follows industry best practices with a **two-layer architecture**:
 - Better browser caching
 - Smaller individual bundle sizes
 - Standard CDN pattern
+
+## 🔧 Version Pinning
+
+By default, the wrapper loads the latest stable version from the root CDN path. You can pin to a specific version using the `KAPTHA_VERSION` environment variable:
+
+### Default (Auto-updates)
+```bash
+npm run build
+# Loads: https://code.kaptha.dev/core/builder.js (latest stable)
+```
+
+### Pin to Specific Version
+```bash
+# Pin to exact version
+KAPTHA_VERSION=1.0.1 npm run build
+# Loads: https://code.kaptha.dev/core/v1.0.1/builder.js
+
+# With 'v' prefix also works
+KAPTHA_VERSION=v1.0.1 npm run build
+```
+
+### Use Cases
+- 🔒 **Production Stability** - Lock to a tested version
+- 🧪 **Testing** - Verify against specific core version  
+- 🐛 **Rollback** - Revert to previous version if needed
+- 📦 **Reproducible Builds** - Same version across all environments
+
+### Example Configuration
+
+**Next.js (package.json):**
+```json
+{
+  "scripts": {
+    "build": "next build",
+    "build:pinned": "KAPTHA_VERSION=1.0.1 next build"
+  }
+}
+```
+
+**Vite (package.json):**
+```json
+{
+  "scripts": {
+    "build": "vite build",
+    "build:v1": "KAPTHA_VERSION=1.0.1 vite build"
+  }
+}
+```
+
+**Docker:**
+```dockerfile
+ENV KAPTHA_VERSION=1.0.1
+RUN npm run build
+```
 
 ## 🎨 Available Components
 

@@ -22,6 +22,7 @@
 
 import * as React from 'react';
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import * as ReactDOM from 'react-dom/client';
 
 // Build CDN URLs based on KAPTHA_VERSION or use default (latest stable)
 function getCDNUrls() {
@@ -119,10 +120,7 @@ let scriptPromise: Promise<void> | null = null;
 // Make React and ReactDOM available globally for the CDN script
 if (typeof window !== 'undefined') {
   (window as any).React = React;
-  // Dynamically import ReactDOM when needed
-  import('react-dom/client').then((ReactDOM) => {
-    (window as any).ReactDOM = ReactDOM;
-  });
+  (window as any).ReactDOM = ReactDOM;
 }
 
 function loadScripts(): Promise<void> {
@@ -227,18 +225,20 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
         ...(minHeight && { minHeight }),
         ...(displayMode && { displayMode }),
         ...(onLoad && { onLoad }),
-        ...(onReady && { onReady }),
+        onReady: () => {
+          // Load initial design after editor is ready
+          if (initialDesign) {
+            editor.loadDesign(initialDesign);
+          }
+          // Call user's onReady callback
+          if (onReady) {
+            onReady();
+          }
+        },
         ...(onDesignChange && { onDesignChange })
       });
 
       editorInstanceRef.current = editor;
-
-      // Load initial design if provided
-      if (initialDesign) {
-        setTimeout(() => {
-          editor.loadDesign(initialDesign);
-        }, 100);
-      }
     } catch (err: any) {
       setError(err.message);
     }
