@@ -26,7 +26,19 @@ import * as ReactDOM from 'react-dom/client';
 
 // Build CDN URLs based on KAPTHA_VERSION or use default (latest stable)
 function getCDNUrls() {
-  const version = process.env.KAPTHA_VERSION;
+  // For local development, check if files are available locally first
+  const isLocalDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+  
+  if (isLocalDev) {
+    // Use local files in development
+    return {
+      js: '/core/builder.js',
+      css: '/core/builder.css'
+    };
+  }
+  
+  // Safe access to process.env for build-time environment variables
+  const version = typeof process !== 'undefined' && process.env ? process.env.KAPTHA_VERSION : undefined;
   const basePath = 'https://code.kaptha.dev/core';
   
   if (version) {
@@ -125,12 +137,6 @@ interface KapthaEmailEditorProps {
 let scriptsLoaded = false;
 let scriptPromise: Promise<void> | null = null;
 
-// Make React and ReactDOM available globally for the CDN script
-if (typeof window !== 'undefined') {
-  (window as any).React = React;
-  (window as any).ReactDOM = ReactDOM;
-}
-
 function loadScripts(): Promise<void> {
   if (scriptsLoaded) {
     return Promise.resolve();
@@ -227,48 +233,64 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
       .catch((err) => setError(err.message));
   }, []);
 
-  // Initialize editor using framework-agnostic API
+  // Initialize editor by mounting React component from bundle
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
     
-    if (!(window as any).kapthaEmailEditor) {
-      setError('Kaptha Email Editor API not loaded (window.kapthaEmailEditor not found)');
+    // Check for EmailEditor component in the bundle
+    const KapthaBundle = (window as any).KapthaEmailEditor;
+    if (!KapthaBundle || !KapthaBundle.EmailEditor) {
+      setError('[Kaptha] EmailEditor component not found in bundle');
       return;
     }
 
     try {
-      // Use framework-agnostic init() method
-      const editor = (window as any).kapthaEmailEditor.init({
-        id: editorIdRef.current,
-        apiKey,
-        ...(workspaceId && { workspaceId }),
-        ...(minHeight && { minHeight }),
-        ...(displayMode && { displayMode }),
-        ...(onLoadRef.current && { onLoad: onLoadRef.current }),
-        onReady: () => {
-          // Load initial design after editor is ready
-          if (initialDesign) {
-            editor.loadDesign(initialDesign);
-          }
-          // Call user's onReady callback
-          if (onReadyRef.current) {
-            onReadyRef.current();
-          }
-        },
-        ...(onDesignChangeRef.current && { onDesignChange: onDesignChangeRef.current })
-      });
+      // Create a React root and mount the EmailEditor component
+      const root = ReactDOM.createRoot(containerRef.current);
+      const editorRef = React.createRef<any>();
+      
+      root.render(
+        React.createElement(KapthaBundle.EmailEditor, {
+          ref: editorRef,
+          onReady: () => {
+            // Store editor methods from component ref
+            if (editorRef.current) {
+              editorInstanceRef.current = editorRef.current;
+            }
+            
+            // Load initial design after editor is ready
+            if (initialDesign && editorRef.current) {
+              editorRef.current.loadDesign(initialDesign);
+            }
+            
+            // Call user callbacks
+            if (onLoadRef.current) {
+              onLoadRef.current();
+            }
+            if (onReadyRef.current) {
+              onReadyRef.current();
+            }
+          },
+          onChange: onDesignChangeRef.current,
+          height: minHeight || '600px',
+        })
+      );
 
-      editorInstanceRef.current = editor;
+      // Store root for cleanup
+      (containerRef.current as any).__reactRoot = root;
     } catch (err: any) {
       setError(err.message);
     }
 
     // Cleanup on unmount
     return () => {
-      if (editorInstanceRef.current) {
-        editorInstanceRef.current.destroy();
-        editorInstanceRef.current = null;
+      if (containerRef.current) {
+        const root = (containerRef.current as any).__reactRoot;
+        if (root) {
+          root.unmount();
+        }
       }
+      editorInstanceRef.current = null;
     };
   }, [isLoaded, apiKey, workspaceId, minHeight, displayMode, initialDesign]);
 
