@@ -275,6 +275,10 @@ KAPTHA_VERSION=1.0.1 npm run build
 
 # With 'v' prefix also works
 KAPTHA_VERSION=v1.0.1 npm run build
+
+# Use edge/latest builds (most recent, may be unstable)
+KAPTHA_VERSION=latest npm run build
+# Loads: https://code.kaptha.dev/core/latest/builder.js
 ```
 
 ### Use Cases

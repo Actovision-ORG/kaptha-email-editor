@@ -30,6 +30,14 @@ function getCDNUrls() {
   const basePath = 'https://code.kaptha.dev/core';
   
   if (version) {
+    // Special case: "latest" maps to /latest/ path for edge releases
+    if (version === 'latest') {
+      return {
+        js: `${basePath}/latest/builder.js`,
+        css: `${basePath}/latest/builder.css`
+      };
+    }
+    
     // Use specific version path when KAPTHA_VERSION is set (e.g., "1.0.1" or "v1.0.1")
     const cleanVersion = version.startsWith('v') ? version : `v${version}`;
     return {

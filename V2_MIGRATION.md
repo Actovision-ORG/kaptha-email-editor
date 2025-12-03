@@ -154,6 +154,10 @@ KAPTHA_VERSION=1.0.1 npm run build
 # Can also use with 'v' prefix
 KAPTHA_VERSION=v1.0.1 npm run build
 # Loads: https://code.kaptha.dev/core/v1.0.1/builder.js
+
+# Use edge/latest builds (most recent, may be unstable)
+KAPTHA_VERSION=latest npm run build
+# Loads: https://code.kaptha.dev/core/latest/builder.js
 ```
 
 **Use cases for pinning:**
