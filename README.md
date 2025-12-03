@@ -66,13 +66,25 @@ export default App;
 
 ## 🔑 API Keys
 
-Get your free API key by emailing: **hello@kaptha.com**
+### Free Development Key (Available Now!)
+
+You can start building immediately with our free development key:
+
+```
+kpt_dev_ws001_demo12345678
+```
+
+**This key is:**
+- ✅ Free to use for development and testing
+- ✅ Works on any domain (unrestricted)
+- ✅ Available until our API key management console launches
+- ✅ Perfect for evaluation and prototyping
+
+### Get Your Own API Key
+
+For production use and custom domain restrictions, contact us at: **hello@kaptha.com**
 
 API keys follow this format: `kpt_{tier}_ws{workspaceId}_{hash}`
-
-Example keys for testing:
-- `kpt_dev_ws001_demo12345678` - Development (unrestricted)
-- `kpt_free_ws002_a1b2c3d4e5f6` - Free tier (localhost only)
 
 ## 📚 API Reference
 
