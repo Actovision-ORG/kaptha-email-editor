@@ -5,169 +5,177 @@
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Actovision-ORG/kaptha-email-editor?utm_source=oss&utm_medium=github&utm_campaign=Actovision-ORG%2Fkaptha-email-editor&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-> React wrapper for DRAG & DROP EmailEditor - Production-ready email builder with React DnD and MJML
+> React wrapper for Kaptha Email Editor - A powerful drag-and-drop email builder with framework-agnostic API
 
-A lightweight React component that loads EmailEditor from CDN. Build beautiful, responsive email templates with drag-and-drop functionality.
+A lightweight React component that loads Kaptha Email Editor from CDN using a clean, framework-agnostic API. Build beautiful, responsive email templates with drag-and-drop functionality.
 
+## ✨ Features
 
+- **🔑 API Key Authentication** - Secure access with API key validation
+- **📦 CDN-Based** - Loads optimized bundle from CDN (212KB, 57KB gzipped)
+- **🎯 Framework-Agnostic Core** - Industry-standard architecture separating core API from React wrapper
+- **🎨 Drag-and-Drop** - Intuitive email builder interface powered by react-dnd
+- **📧 MJML Export** - Production-ready responsive emails
+- **🔧 TypeScript** - Full type safety included
+- **🚀 Efficient** - Share React across your app
+- **⚡ Forward Compatible** - Supports React >=18.0.0
 
+## 📋 Requirements
 
-## Features
+- React >=18.0.0
+- API key (get yours at: hello@kaptha.com)
 
-✨ **CDN-Based** - Loads optimized bundle from CDN (181KB, 50KB gzipped)  
-📦 **Small Bundle** - React external, only builder code included  
-🎨 **Drag-and-Drop** - Intuitive email builder interface powered by react-dnd  
-📧 **MJML Export** - Production-ready responsive emails  
-🔧 **TypeScript** - Full type safety included  
-🚀 **Efficient** - Share React across your app  
-🏷️ **11 Components** - Text, button, image, video, timer, HTML, divider, spacer, social, columns, section  
-✏️ **Advanced Property Controls** - Comprehensive editors for all component types with presets and validation  
-↩️ **Undo/Redo** - Full history tracking with 50-state limit  
-🎨 **Design System** - Customizable color palettes and typography  
-💾 **Templates** - Pre-built templates (newsletter, welcome email)  
-📐 **Layout System** - Multi-column layouts (2-4 columns) with quick presets and per-column styling  
-🖼️ **Rich Media** - Image upload modal, video embeds, 10+ social platforms
-
-## Installation
+## 📦 Installation
 
 ```bash
 npm install @actovision/kaptha-email-editor react react-dom
 ```
 
-## Quick Start
+## 🚀 Quick Start
 
 ```tsx
-import EmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor, { EditorMethods } from '@actovision/kaptha-email-editor';
+import { useRef } from 'react';
 
 function App() {
+  const editorRef = useRef<EditorMethods>(null);
+
+  const handleExport = async () => {
+    if (editorRef.current) {
+      const { html, mjml } = await editorRef.current.exportHtml();
+      console.log('HTML:', html);
+      console.log('MJML:', mjml);
+    }
+  };
+
   return (
-    <EmailEditor 
-      height="100vh"
-      onExport={(html, mjml) => {
-        console.log('HTML:', html);
-        console.log('MJML:', mjml);
-      }}
-    />
+    <>
+      <KapthaEmailEditor
+        ref={editorRef}
+        apiKey="kpt_dev_ws001_demo12345678"
+        minHeight="600px"
+        onReady={() => console.log('Editor ready!')}
+      />
+      <button onClick={handleExport}>Export</button>
+    </>
   );
 }
 
 export default App;
 ```
 
-That's it! The component will automatically load the EmailEditor from CDN.
+## 🔑 API Keys
 
-## API
+Get your free API key by emailing: **hello@kaptha.com**
 
-### `<EmailEditor>`
+API keys follow this format: `kpt_{tier}_ws{workspaceId}_{hash}`
+
+Example keys for testing:
+- `kpt_dev_ws001_demo12345678` - Development (unrestricted)
+- `kpt_free_ws002_a1b2c3d4e5f6` - Free tier (localhost only)
+
+## 📚 API Reference
+
+### `<KapthaEmailEditor>`
 
 **Props:**
-- `height?: string` - Builder height (default: `"600px"`)
-- `onExport?: (html: string, mjml: string) => void` - Export callback
-- `initialTemplate?: EmailTemplate` - Starting template
-- `onSave?: (template: EmailTemplate) => void` - Save callback
-- `onChange?: (components: EmailComponent[]) => void` - Change callback
-- `style?: React.CSSProperties` - Custom inline styles
 
-**Example:**
+```typescript
+interface KapthaEmailEditorProps {
+  // Required
+  apiKey: string;
+  
+  // Optional
+  workspaceId?: string;
+  minHeight?: string; // default: '600px'
+  displayMode?: 'email' | 'web';
+  onLoad?: () => void;
+  onReady?: () => void;
+  onDesignChange?: (design: EmailDesign) => void;
+  initialDesign?: EmailDesign;
+  className?: string;
+  style?: React.CSSProperties;
+}
+```
+
+**Editor Methods (via ref):**
+
+```typescript
+interface EditorMethods {
+  loadDesign: (design: EmailDesign) => void;
+  saveDesign: () => EmailDesign;
+  exportHtml: () => Promise<{ html: string; mjml: string }>;
+  exportMjml: () => string;
+  exportJson: () => EmailDesign;
+  destroy: () => void;
+}
+```
+
+**Usage Example:**
+
 ```tsx
-import EmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor, { EditorMethods, EmailDesign } from '@actovision/kaptha-email-editor';
+import { useRef } from 'react';
 
 function App() {
-  const handleExport = (html: string, mjml: string) => {
-    console.log('HTML:', html);
-    console.log('MJML:', mjml);
-    // Save to your backend
+  const editorRef = useRef<EditorMethods>(null);
+
+  const handleSave = () => {
+    if (editorRef.current) {
+      const design = editorRef.current.saveDesign();
+      console.log('Saved design:', design);
+      // Save to your backend
+    }
   };
 
-  const handleSave = (template: any) => {
-    console.log('Template saved:', template);
-    // Save to your backend
+  const handleExport = async () => {
+    if (editorRef.current) {
+      const { html, mjml } = await editorRef.current.exportHtml();
+      console.log('Exported HTML:', html);
+      console.log('Exported MJML:', mjml);
+      // Send to your backend
+    }
+  };
+
+  const handleLoadTemplate = () => {
+    if (editorRef.current) {
+      const template: EmailDesign = {
+        components: [
+          {
+            type: 'text',
+            props: {
+              content: 'Hello World!',
+              fontSize: '24px',
+              color: '#333333'
+            }
+          }
+        ]
+      };
+      editorRef.current.loadDesign(template);
+    }
   };
 
   return (
-    <EmailEditor
-      height="100vh"
-      onExport={handleExport}
-      onSave={handleSave}
-      initialTemplate={{
-        name: 'My Email',
-        category: 'custom',
-        components: []
-      }}
-    />
+    <div>
+      <div style={{ marginBottom: '10px' }}>
+        <button onClick={handleSave}>Save Design</button>
+        <button onClick={handleExport}>Export HTML</button>
+        <button onClick={handleLoadTemplate}>Load Template</button>
+      </div>
+      
+      <KapthaEmailEditor
+        ref={editorRef}
+        apiKey="kpt_dev_ws001_demo12345678"
+        minHeight="600px"
+        onReady={() => console.log('Editor ready!')}
+        onDesignChange={(design) => console.log('Design changed:', design)}
+      />
+    </div>
   );
 }
 ```
 
-## Available Components
-
-The builder includes 11 pre-built components:
-
-1. **Text** - Rich text with font size, color, alignment, and padding
-2. **Button** - Call-to-action buttons with custom styling and border radius
-3. **Image** - Responsive images with URL, alt text, and width
-4. **Video** - Video embeds with poster image and controls
-5. **Timer** - Countdown timers with target date and format
-6. **HTML** - Custom HTML blocks for advanced users
-7. **Divider** - Horizontal dividers with custom color and width
-8. **Spacer** - Vertical spacing control with adjustable height
-9. **Social** - Social media icons (Facebook, Twitter, Instagram, LinkedIn, YouTube, GitHub, etc.)
-10. **Columns** - Multi-column layouts (2, 3, or 4 columns)
-11. **Section** - Container sections with background colors and padding
-
-## Key Features
-
-### Drag-and-Drop Interface
-- Intuitive drag-and-drop powered by react-dnd
-- Nested drop zones for columns and sections
-- Visual feedback with toast notifications
-- Smart targeting prevents event bubbling
-
-### Undo/Redo System
-- Full history tracking with 50-state limit
-- Navigate through all changes
-- Immutable state updates
-
-### Design System
-- Customizable color palettes
-- Typography controls
-- Consistent styling across components
-
-### Template System
-- Pre-built templates (newsletter, welcome email)
-- Save and load custom templates
-- Template selector interface
-
-### Export Options
-- Export to MJML format
-- Convert to production-ready HTML
-- Visual feedback during export
-
-## CDN URLs
-
-The component loads these resources automatically:
-
-- **JS**: https://code.kaptha.dev/core/editor.js (181KB, 50KB gzipped)
-- **CSS**: https://code.kaptha.dev/core/editor.css
-
-## How It Works
-
-This package:
-1. Loads the EmailEditor script from CDN on mount
-2. Injects the CSS automatically
-3. Renders the builder in your React app
-4. Provides TypeScript definitions
-
-**Benefits:**
-- ✅ No large dependencies in your bundle
-- ✅ Fast loading from global CDN
-- ✅ Uses your existing React installation
-- ✅ No React version conflicts
-- ✅ Smaller bundle size (44% reduction vs bundling React)
-- ✅ Better caching (React cached separately)
-- ✅ Simple React API
-
-## Direct CDN Usage (No npm)
+## 🔧 CDN Usage (Vanilla JavaScript)
 
 For plain HTML/JavaScript without npm:
 
@@ -175,66 +183,58 @@ For plain HTML/JavaScript without npm:
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" href="https://code.kaptha.dev/core/editor.css">
+  <link rel="stylesheet" href="https://code.kaptha.dev/core/builder.css">
 </head>
 <body>
-  <div id="root"></div>
+  <div id="editor"></div>
 
   <!-- Include React first -->
   <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
   
-  <!-- Then EmailEditor (181KB, 50KB gzipped) -->
-  <script src="https://code.kaptha.dev/core/editor.js"></script>
+  <!-- Then Kaptha Email Editor (212KB, 57KB gzipped) -->
+  <script src="https://code.kaptha.dev/core/builder.js"></script>
 
   <script>
-    // Uses global React and ReactDOM
-    const { EmailEditor } = window.KapthaEmailEditor;
-
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-    root.render(React.createElement(EmailEditor, {
-      height: '100vh',
-      onExport: (html, mjml) => {
-        console.log('Exported:', html, mjml);
+    // Use framework-agnostic API
+    const editor = kapthaEmailEditor.init({
+      id: 'editor',
+      apiKey: 'kpt_dev_ws001_demo12345678',
+      minHeight: '600px',
+      onReady: () => {
+        console.log('Editor ready!');
       }
-    }));
+    });
+
+    // Export HTML
+    async function exportHTML() {
+      const { html, mjml } = await editor.exportHtml();
+      console.log('HTML:', html);
+      console.log('MJML:', mjml);
+    }
   </script>
 </body>
 </html>
 ```
 
-## TypeScript Support
+## 🏗️ Architecture
 
-Full TypeScript definitions included:
+This package follows industry best practices with a **two-layer architecture**:
 
-```tsx
-import EmailEditor from '@actovision/kaptha-email-editor';
+1. **Core API (Framework-Agnostic)** - `kapthaEmailEditor.init()` loaded from CDN
+2. **React Wrapper** - Thin React component that uses the core API
 
-// Props are fully typed
-const builder = (
-  <EmailEditor
-    height="100vh"
-    onExport={(html: string, mjml: string) => {
-      // Typed parameters
-    }}
-    onSave={(template: any) => {
-      // Template is typed
-    }}
-  />
-);
-```
+**Benefits:**
+- ✅ Clean separation of concerns
+- ✅ Framework-agnostic core can be used with any framework
+- ✅ Small wrapper packages for each framework
+- ✅ Easy to add support for Vue, Angular, Svelte, etc.
+- ✅ Industry-standard two-layer architecture
 
-## Browser Support
+## 📦 Bundle Sizes
 
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-
-## Bundle Size
-
-- **CDN Bundle**: 181KB (50KB gzipped) - excludes React/ReactDOM
-- **npm Package**: ~2KB wrapper + CDN loader
+- **CDN Bundle**: 212KB (57KB gzipped) - excludes React/ReactDOM
+- **npm Package**: ~3KB wrapper + CDN loader
 - **Total**: Depends on your React version (typically ~130KB for React 18)
 
 **Why external React?**
@@ -244,23 +244,87 @@ const builder = (
 - Smaller individual bundle sizes
 - Standard CDN pattern
 
-## Contributing
+## 🎨 Available Components
+
+The builder includes 11 pre-built components:
+
+1. **Text** - Rich text with font size, color, alignment
+2. **Button** - Call-to-action buttons with custom styling
+3. **Image** - Responsive images with upload support
+4. **Video** - Video embeds with poster images
+5. **Timer** - Countdown timers with target dates
+6. **HTML** - Custom HTML blocks
+7. **Divider** - Horizontal dividers
+8. **Spacer** - Vertical spacing control
+9. **Social** - Social media icons (10+ platforms)
+10. **Columns** - Multi-column layouts (2-4 columns)
+11. **Section** - Container sections with backgrounds
+
+## 🔐 Security
+
+- **API Key Validation** - All requests require valid API keys
+- **Domain Whitelisting** - Restrict usage to specific domains
+- **Secure by Default** - Keys validated on every init
+
+## 🌐 Browser Support
+
+- Chrome (latest)
+- Firefox (latest)
+- Safari (latest)
+- Edge (latest)
+
+## 📄 TypeScript Support
+
+Full TypeScript definitions included:
+
+```typescript
+import KapthaEmailEditor, { EditorMethods, EmailDesign } from '@actovision/kaptha-email-editor';
+```
+
+## 🔄 Migration from v1.x
+
+**Breaking Changes in v2.0.0:**
+
+1. **API Key Required** - All usage now requires an API key
+2. **New API** - Uses `kapthaEmailEditor.init()` instead of direct component mounting
+3. **CDN URLs Changed** - `editor.js` → `builder.js`, `editor.css` → `builder.css`
+4. **React Version** - Changed from `^18.0.0 || ^19.0.0` to `>=18.0.0`
+
+**Migration Example:**
+
+```tsx
+// v1.x (OLD)
+<EmailEditor
+  height="600px"
+  onExport={(html, mjml) => {}}
+/>
+
+// v2.0.0 (NEW)
+<KapthaEmailEditor
+  ref={editorRef}
+  apiKey="your-api-key"
+  minHeight="600px"
+/>
+```
+
+## 📝 Changelog
+
+See [CHANGELOG.md](https://github.com/Actovision-ORG/kaptha-email-editor/blob/main/CHANGELOG.md) for release history.
+
+## 🤝 Contributing
 
 Contributions welcome! Please read our [contributing guidelines](https://github.com/Actovision-ORG/kaptha-email-editor/blob/main/CONTRIBUTING.md).
 
-## License
+## 📄 License
 
 MIT © [Actovision](https://github.com/Actovision-ORG)
 
-## Support
+## 💬 Support
 
 - 📖 [Documentation](https://github.com/Actovision-ORG/kaptha-email-editor-core)
 - 🐛 [Issue Tracker](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
 - 💬 [Discussions](https://github.com/Actovision-ORG/kaptha-email-editor/discussions)
-
-## Changelog
-
-See [CHANGELOG.md](https://github.com/Actovision-ORG/kaptha-email-editor/blob/main/CHANGELOG.md) for release history.
+- ✉️ Email: hello@kaptha.com
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "name": "@actovision/kaptha-email-editor",
-  "version": "1.1.0",
-  "description": "React wrapper for Kaptha Email Editor - Production-ready email builder with React DnD and MJML",
+  "version": "2.0.0",
+  "description": "React wrapper for Kaptha Email Editor - A powerful drag-and-drop email editor with framework-agnostic API",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -51,8 +51,8 @@
     "npm": ">=11.0.0"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.1.5",
