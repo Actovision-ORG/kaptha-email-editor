@@ -1,6 +1,6 @@
 # @actovision/kaptha-email-editor
 
-[![npm version](https://badge.fury.io/js/%40kaptha-email-editor.svg)](https://www.npmjs.com/package/@actovision/kaptha-email-editor)
+[![npm version](https://badge.fury.io/js/%40actovision%2Fkaptha-email-editor.svg)](https://www.npmjs.com/package/@actovision/kaptha-email-editor)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Actovision-ORG/kaptha-email-editor?utm_source=oss&utm_medium=github&utm_campaign=Actovision-ORG%2Fkaptha-email-editor&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
