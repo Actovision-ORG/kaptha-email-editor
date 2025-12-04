@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.9] - 2025-12-04
+
+### Fixed
+- **React 19 Support**: Fixed CDN bundle compatibility with React 19
+  - Resolved "ReactCurrentOwner undefined" error by ensuring pure React 19 build environment
+  - Added cache-busting to CDN URLs to force fresh bundle loading after update
+  - CDN bundle now built with React 19.2.1 (deduplicated)
+  
+### Changed
+- CDN URLs now include cache-busting timestamp parameter for reliable updates
+- Core workspace upgraded to React 19.2.0 as direct dependency
+
 ## [2.0.0] - 2025-12-03
 
 ### ⚠️ BREAKING CHANGES
