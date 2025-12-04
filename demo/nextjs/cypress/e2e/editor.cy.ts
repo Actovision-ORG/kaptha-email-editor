@@ -28,11 +28,11 @@ describe('Kaptha Email Editor - Next.js Demo', () => {
   it('should load external scripts and styles', () => {
     cy.wait(2000);
     
-    // Check if CSS is loaded (builder.css in v2)
-    cy.get('link[href*="kaptha.dev/core/builder.css"], link[href*="code.kaptha.dev/core/builder.css"]', { timeout: 10000 }).should('exist');
+    // Check if CSS is loaded (builder.css in v2) - can be local or CDN
+    cy.get('link[href*="builder.css"]', { timeout: 10000 }).should('exist');
     
-    // Check if JS is loaded (builder.js in v2)
-    cy.get('script[src*="kaptha.dev/core/builder.js"], script[src*="code.kaptha.dev/core/builder.js"]', { timeout: 10000 }).should('exist');
+    // Check if JS is loaded (builder.js in v2) - can be local or CDN
+    cy.get('script[src*="builder.js"]', { timeout: 10000 }).should('exist');
   });
 
   it('should maintain responsive height on different viewports', () => {
