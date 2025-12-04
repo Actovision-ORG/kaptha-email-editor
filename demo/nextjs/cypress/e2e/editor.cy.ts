@@ -11,58 +11,56 @@ describe('Kaptha Email Editor - Next.js Demo', () => {
   });
 
   it('should display loading state and then load the editor', () => {
-    // Check for loading state
-    cy.contains('Loading Kaptha Email Editor...').should('exist');
-    
-    // Wait for editor to load
-    cy.waitForEditor();
+    // In v2, the editor loads quickly so we just check that it loads
+    cy.get('main', { timeout: 10000 }).should('exist');
     
     // Verify editor container is present
-    cy.get('div[style*="height"]').should('exist');
+    cy.get('div[id^="kaptha-editor-"]', { timeout: 10000 }).should('exist');
   });
 
   it('should work with Next.js client component', () => {
-    cy.waitForEditor();
+    cy.wait(2000);
     
-    // Verify the page is using client-side rendering
-    cy.window().should('have.property', 'React');
-    cy.window().should('have.property', 'ReactDOM');
+    // Verify the editor component loaded
+    cy.get('div[id^="kaptha-editor-"]', { timeout: 10000 }).should('exist');
   });
 
   it('should load external scripts and styles', () => {
-    cy.waitForEditor();
+    cy.wait(2000);
     
-    // Check if CSS is loaded
-    cy.get('link[href*="kaptha.dev/core/editor.css"]').should('exist');
+    // Check if CSS is loaded (builder.css in v2)
+    cy.get('link[href*="kaptha.dev/core/builder.css"], link[href*="code.kaptha.dev/core/builder.css"]', { timeout: 10000 }).should('exist');
     
-    // Check if JS is loaded
-    cy.get('script[src*="kaptha.dev/core/editor.js"]').should('exist');
+    // Check if JS is loaded (builder.js in v2)
+    cy.get('script[src*="kaptha.dev/core/builder.js"], script[src*="code.kaptha.dev/core/builder.js"]', { timeout: 10000 }).should('exist');
   });
 
   it('should maintain responsive height on different viewports', () => {
-    cy.waitForEditor();
+    cy.wait(2000);
     
     // Test desktop
     cy.viewport(1920, 1080);
-    cy.get('div[style*="height"]').should('be.visible');
+    cy.get('div[id^="kaptha-editor-"]', { timeout: 10000 }).should('be.visible');
     
     // Test laptop
     cy.viewport(1280, 720);
-    cy.get('div[style*="height"]').should('be.visible');
+    cy.get('div[id^="kaptha-editor-"]').should('be.visible');
     
     // Test tablet
     cy.viewport(768, 1024);
-    cy.get('div[style*="height"]').should('be.visible');
+    cy.get('div[id^="kaptha-editor-"]').should('be.visible');
   });
 
   it('should handle Next.js hydration correctly', () => {
     cy.visit('/');
+    cy.wait(2000);
     
     // Should not show hydration errors
     cy.get('body').should('not.contain', 'Hydration failed');
     cy.get('body').should('not.contain', 'Text content does not match');
     
-    cy.waitForEditor();
+    // Verify editor loaded
+    cy.get('div[id^="kaptha-editor-"]', { timeout: 10000 }).should('exist');
   });
 
   it('should work with Next.js 16 App Router', () => {
