@@ -26,17 +26,6 @@ import * as ReactDOM from 'react-dom/client';
 
 // Build CDN URLs based on KAPTHA_VERSION or use default (latest stable)
 function getCDNUrls() {
-  // For local development, check if files are available locally first
-  const isLocalDev = typeof window !== 'undefined' && window.location.hostname === 'localhost';
-  
-  if (isLocalDev) {
-    // Use local files in development
-    return {
-      js: '/core/builder.js',
-      css: '/core/builder.css'
-    };
-  }
-  
   // Safe access to process.env for build-time environment variables
   const version = typeof process !== 'undefined' && process.env ? process.env.KAPTHA_VERSION : undefined;
   const basePath = 'https://code.kaptha.dev/core';
