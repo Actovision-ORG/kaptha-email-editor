@@ -20,8 +20,9 @@
  * ```
  */
 
-import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
-import ReactDOM from 'react-dom/client';
+import * as React from 'react';
+import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import * as ReactDOM from 'react-dom/client';
 
 // Build CDN URLs based on KAPTHA_VERSION or use default (latest stable)
 function getCDNUrls() {
