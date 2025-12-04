@@ -34,23 +34,23 @@ function getCDNUrls() {
     // Special case: "latest" maps to /latest/ path for edge releases
     if (version === 'latest') {
       return {
-        js: `${basePath}/latest/builder.js`,
-        css: `${basePath}/latest/builder.css`
+        js: `${basePath}/latest/editor.js`,
+        css: `${basePath}/latest/editor.css`
       };
     }
     
     // Use specific version path when KAPTHA_VERSION is set (e.g., "1.0.1" or "v1.0.1")
     const cleanVersion = version.startsWith('v') ? version : `v${version}`;
     return {
-      js: `${basePath}/${cleanVersion}/builder.js`,
-      css: `${basePath}/${cleanVersion}/builder.css`
+      js: `${basePath}/${cleanVersion}/editor.js`,
+      css: `${basePath}/${cleanVersion}/editor.css`
     };
   }
   
   // Default: latest stable (root path for auto-updates)
   return {
-    js: `${basePath}/builder.js`,
-    css: `${basePath}/builder.css`
+    js: `${basePath}/editor.js`,
+    css: `${basePath}/editor.css`
   };
 }
 
