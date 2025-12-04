@@ -141,6 +141,7 @@ function loadScripts(): Promise<void> {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
       link.href = CDN_CSS_URL;
+      link.crossOrigin = 'anonymous'; // Fix ERR_BLOCKED_BY_ORB
       document.head.appendChild(link);
     }
 
@@ -148,6 +149,8 @@ function loadScripts(): Promise<void> {
     if (!document.querySelector(`script[src="${CDN_JS_URL}"]`)) {
       const script = document.createElement('script');
       script.src = CDN_JS_URL;
+      script.crossOrigin = 'anonymous'; // Fix ERR_BLOCKED_BY_ORB
+      script.type = 'text/javascript';
       script.onload = () => {
         scriptsLoaded = true;
         resolve();
