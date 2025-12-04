@@ -136,6 +136,12 @@ function loadScripts(): Promise<void> {
   }
 
   scriptPromise = new Promise((resolve, reject) => {
+    // Expose React and ReactDOM globally for the CDN bundle
+    if (typeof window !== 'undefined') {
+      window.React = React;
+      window.ReactDOM = ReactDOM;
+    }
+    
     // Load CSS
     if (!document.querySelector(`link[href="${CDN_CSS_URL}"]`)) {
       const link = document.createElement('link');
