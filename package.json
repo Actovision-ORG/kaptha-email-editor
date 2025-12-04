@@ -1,6 +1,6 @@
 {
   "name": "@actovision/kaptha-email-editor",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "React wrapper for Kaptha Email Editor - A powerful drag-and-drop email editor with framework-agnostic API",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
