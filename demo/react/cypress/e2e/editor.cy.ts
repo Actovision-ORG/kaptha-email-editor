@@ -22,11 +22,11 @@ describe('Kaptha Email Editor - React Demo', () => {
   it('should load external scripts and styles', () => {
     cy.wait(2000); // Wait for scripts to load
     
-    // Check if CSS is loaded (builder.css in v2) - can be local or CDN
-    cy.get('link[href*="builder.css"]', { timeout: 10000 }).should('exist');
+    // Check if CSS is loaded (editor.css from CDN)
+    cy.get('link[href*="editor.css"]', { timeout: 10000 }).should('exist');
     
-    // Check if JS is loaded (builder.js in v2) - can be local or CDN
-    cy.get('script[src*="builder.js"]', { timeout: 10000 }).should('exist');
+    // Check if JS is loaded (editor.js from CDN)
+    cy.get('script[src*="editor.js"]', { timeout: 10000 }).should('exist');
   });
 
   it('should set up React and ReactDOM globals', () => {
