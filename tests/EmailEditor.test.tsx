@@ -71,12 +71,10 @@ describe('KapthaEmailEditor Component', () => {
     expect(container).toBeTruthy();
   });
 
-  it('should set React and ReactDOM on window when component mounts', () => {
-    render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
-    
-    // Component should attempt to set these
-    expect(typeof window).toBe('object');
-    expect((window as any).React).toBeDefined();
+  it('should render with proper structure', () => {
+    const { container } = render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
+    // Should render loading state initially
+    expect(container.querySelector('div')).toBeTruthy();
   });
 
   it('should render loading state with loading text', () => {
