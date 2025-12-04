@@ -28,8 +28,10 @@ A lightweight React component that loads Kaptha Email Editor from CDN using a cl
 ## 📦 Installation
 
 ```bash
-npm install @actovision/kaptha-email-editor react react-dom
+npm install @actovision/kaptha-email-editor
 ```
+
+**Note:** React and React DOM are peer dependencies and should already be in your project.
 
 ## 🚀 Quick Start
 
@@ -100,7 +102,6 @@ interface KapthaEmailEditorProps {
   // Optional
   workspaceId?: string;
   minHeight?: string; // default: '600px'
-  displayMode?: 'email' | 'web';
   onLoad?: () => void;
   onReady?: () => void;
   onDesignChange?: (design: EmailDesign) => void;

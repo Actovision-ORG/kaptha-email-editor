@@ -48,9 +48,11 @@ function getCDNUrls() {
   }
   
   // Default: latest stable (root path for auto-updates)
+  // Add cache-busting parameter to force reload after React 19 update
+  const cacheBust = `?v=${Date.now()}`;
   return {
-    js: `${basePath}/editor.js`,
-    css: `${basePath}/editor.css`
+    js: `${basePath}/editor.js${cacheBust}`,
+    css: `${basePath}/editor.css${cacheBust}`
   };
 }
 
@@ -86,11 +88,6 @@ interface KapthaEmailEditorProps {
    * @default '600px'
    */
   minHeight?: string;
-  
-  /**
-   * Display mode
-   */
-  displayMode?: 'email' | 'web';
   
   /**
    * Callback when editor loads
@@ -176,7 +173,6 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
   apiKey,
   workspaceId,
   minHeight = '600px',
-  displayMode,
   onLoad,
   onReady,
   onDesignChange,
@@ -290,7 +286,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
       }
       editorInstanceRef.current = null;
     };
-  }, [isLoaded, apiKey, workspaceId, minHeight, displayMode, initialDesign]);
+  }, [isLoaded, apiKey, workspaceId, minHeight, initialDesign]);
 
   if (error) {
     return (
