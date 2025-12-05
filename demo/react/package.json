@@ -2,6 +2,7 @@
   "name": "kaptha-email-editor-react-demo",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "React demo for @actovision/kaptha-email-editor",
   "scripts": {
     "dev": "vite",
