@@ -1,6 +1,4 @@
 import KapthaEmailEditor from '@actovision/kaptha-email-editor';
-// @ts-ignore - CustomBlock in v2.1.0, will work when published to npm
-import type { CustomBlock } from '@actovision/kaptha-email-editor';
 import './App.css';
 
 function App() {
@@ -14,7 +12,7 @@ function App() {
   };
 
   // Define custom blocks
-  const customBlocks: CustomBlock[] = [
+  const customBlocks = [
     {
       id: 'hero-section',
       name: 'Hero Section',
