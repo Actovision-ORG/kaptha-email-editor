@@ -1,4 +1,4 @@
-import KapthaEmailEditor, { CustomBlock } from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor from '@actovision/kaptha-email-editor';
 import './App.css';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   };
 
   // Define custom blocks
-  const customBlocks: CustomBlock[] = [
+  const customBlocks = [
     {
       id: 'hero-section',
       name: 'Hero Section',
