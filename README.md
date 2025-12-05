@@ -4,21 +4,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Actovision-ORG/kaptha-email-editor?utm_source=oss&utm_medium=github&utm_campaign=Actovision-ORG%2Fkaptha-email-editor&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
-> React wrapper for Kaptha Email Editor - A powerful drag-and-drop email builder with framework-agnostic API
+> React wrapper for Kaptha Email Editor - A powerful drag-and-drop email builder with framework-agnostic vanilla JS API
 
-A lightweight React component that loads Kaptha Email Editor from CDN using a clean, framework-agnostic API. Build beautiful, responsive email templates with drag-and-drop functionality.
+A lightweight React component that loads Kaptha Email Editor from CDN using a self-contained vanilla JS bundle. Build beautiful, responsive email templates with drag-and-drop functionality - **no React version conflicts**.
 
 ## ✨ Features
 
 - **🔑 API Key Authentication** - Secure access with API key validation
-- **📦 CDN-Based** - Loads optimized bundle from CDN (212KB, 57KB gzipped)
-- **🎯 Framework-Agnostic Core** - Industry-standard architecture separating core API from React wrapper
-- **🎨 Drag-and-Drop** - Intuitive email builder interface powered by react-dnd
+- **📦 CDN-Based Vanilla JS** - Self-contained bundle (114KB gzipped) with React bundled internally
+- **🎯 Zero React Conflicts** - Works with React 18 and React 19 without version conflicts
+- **🎨 Drag-and-Drop** - Intuitive email builder interface with react-dnd included
 - **📦 Custom Blocks** - Add reusable pre-built component groups to Elements panel
 - **📧 MJML Export** - Production-ready responsive emails
 - **🔧 TypeScript** - Full type safety included
-- **🚀 Efficient** - Share React across your app
-- **⚡ React 18 & 19** - Tested with both React 18 and 19
+- **🚀 Framework Agnostic** - Core API can be used in any JavaScript framework
+- **⚡ Battle-Tested** - Verified with React 18.3.1 and React 19.2.0
 
 ## 📋 Requirements
 
@@ -338,30 +338,39 @@ For plain HTML/JavaScript without npm:
 
 ## 🏗️ Architecture
 
-This package follows industry best practices with a **two-layer architecture**:
+This package uses a **vanilla JS core with React wrapper** architecture for maximum compatibility:
 
-1. **Core API (Framework-Agnostic)** - `kapthaEmailEditor.init()` loaded from CDN
-2. **React Wrapper** - Thin React component that uses the core API
+### How It Works
 
-**Benefits:**
-- ✅ Clean separation of concerns
-- ✅ Framework-agnostic core can be used with any framework
-- ✅ Small wrapper packages for each framework
-- ✅ Easy to add support for Vue, Angular, Svelte, etc.
-- ✅ Industry-standard two-layer architecture
+1. **CDN Bundle** (`editor.js`): Self-contained vanilla JavaScript bundle with React bundled internally
+   - Size: 394KB raw (114KB gzipped)
+   - Includes: React, ReactDOM, react-dnd, react-dnd-html5-backend
+   - Exposes global `window.KapthaEmailEditor` API
+
+2. **React Wrapper** (this package): Lightweight component that loads and wraps the vanilla API
+   - Size: ~5KB (loads CDN bundle)
+   - Provides React-friendly interface
+   - Zero React version conflicts
+
+### Benefits
+
+- ✅ **No Version Conflicts**: Core bundle has its own React instance
+- ✅ **Works with React 18 & 19**: Parent app can use any React version
+- ✅ **Framework Agnostic**: Core can be used in Vue, Angular, Svelte, etc.
+- ✅ **Easy Integration**: Just load script and use API
+- ✅ **Industry Standard**: Similar to Stripe and Google Analytics
 
 ## 📦 Bundle Sizes
 
-- **CDN Bundle**: 212KB (57KB gzipped) - excludes React/ReactDOM
-- **npm Package**: ~3KB wrapper + CDN loader
-- **Total**: Depends on your React version (typically ~130KB for React 18)
+- **CDN Vanilla Bundle**: 394KB (114KB gzipped) - includes everything
+- **npm Wrapper Package**: ~5KB + CDN loader
+- **Total for Your App**: 114KB gzipped (one-time download, cached)
 
-**Why external React?**
-- Share React across multiple libraries
-- Use your preferred React version
-- Better browser caching
-- Smaller individual bundle sizes
-- Standard CDN pattern
+**Why bundle React internally?**
+- Eliminates React version conflicts (works with React 18 and 19)
+- Simplified dependencies (no peer dependency issues)
+- Better isolation (editor has its own React context)
+- Framework agnostic (can be used outside React)
 
 ## 🔧 Version Pinning
 
