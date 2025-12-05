@@ -71,6 +71,14 @@ export interface EditorMethods {
   destroy: () => void;
 }
 
+export interface CustomBlock {
+  id: string;
+  name: string;
+  category?: string;
+  thumbnail?: string;
+  components: any[];
+}
+
 interface KapthaEmailEditorProps {
   /**
    * API key (required)
@@ -88,6 +96,11 @@ interface KapthaEmailEditorProps {
    * @default '600px'
    */
   minHeight?: string;
+  
+  /**
+   * Custom blocks to show in the Elements panel
+   */
+  customBlocks?: CustomBlock[];
   
   /**
    * Callback when editor loads
@@ -173,6 +186,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
   apiKey,
   workspaceId,
   minHeight = '600px',
+  customBlocks,
   onLoad,
   onReady,
   onDesignChange,
@@ -246,6 +260,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
       root.render(
         React.createElement(KapthaBundle.EmailEditor, {
           ref: editorRef,
+          ...(customBlocks && { customBlocks }),
           onReady: () => {
             // Store editor methods from component ref
             if (editorRef.current) {
@@ -286,7 +301,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>(({
       }
       editorInstanceRef.current = null;
     };
-  }, [isLoaded, apiKey, workspaceId, minHeight, initialDesign]);
+  }, [isLoaded, apiKey, workspaceId, minHeight, customBlocks, initialDesign]);
 
   if (error) {
     return (
