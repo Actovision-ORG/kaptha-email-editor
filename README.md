@@ -14,6 +14,7 @@ A lightweight React component that loads Kaptha Email Editor from CDN using a cl
 - **📦 CDN-Based** - Loads optimized bundle from CDN (212KB, 57KB gzipped)
 - **🎯 Framework-Agnostic Core** - Industry-standard architecture separating core API from React wrapper
 - **🎨 Drag-and-Drop** - Intuitive email builder interface powered by react-dnd
+- **📦 Custom Blocks** - Add reusable pre-built component groups to Elements panel
 - **📧 MJML Export** - Production-ready responsive emails
 - **🔧 TypeScript** - Full type safety included
 - **🚀 Efficient** - Share React across your app
@@ -66,6 +67,102 @@ function App() {
 export default App;
 ```
 
+## 🎨 Custom Blocks
+
+Add reusable pre-built component groups to the Elements panel:
+
+```tsx
+import KapthaEmailEditor from '@actovision/kaptha-email-editor';
+
+function App() {
+  // Define custom blocks
+  const customBlocks = [
+    {
+      id: 'hero-section',
+      name: 'Hero Section',
+      category: 'marketing',
+      thumbnail: 'https://example.com/hero-thumb.png', // optional
+      components: [
+        {
+          id: 'text-hero-1',
+          type: 'text',
+          props: {
+            text: '<h1>Welcome to Our Newsletter</h1>',
+            fontSize: '32px',
+            fontWeight: 'bold',
+            color: '#1a202c',
+            align: 'center'
+          }
+        },
+        {
+          id: 'text-hero-2',
+          type: 'text',
+          props: {
+            text: '<p>Stay updated with our latest news and updates.</p>',
+            fontSize: '16px',
+            color: '#718096',
+            align: 'center'
+          }
+        },
+        {
+          id: 'button-hero',
+          type: 'button',
+          props: {
+            text: 'Get Started',
+            href: 'https://example.com',
+            backgroundColor: '#3182ce',
+            textColor: '#ffffff',
+            align: 'center'
+          }
+        }
+      ]
+    },
+    {
+      id: 'footer-block',
+      name: 'Footer',
+      category: 'footer',
+      components: [
+        {
+          id: 'social-footer',
+          type: 'social',
+          props: {
+            links: [
+              { platform: 'facebook', url: 'https://facebook.com/yourpage' },
+              { platform: 'twitter', url: 'https://twitter.com/yourhandle' }
+            ],
+            iconSize: '32px',
+            align: 'center'
+          }
+        },
+        {
+          id: 'text-footer',
+          type: 'text',
+          props: {
+            text: '<p>© 2024 Your Company. All rights reserved.</p>',
+            fontSize: '12px',
+            color: '#a0aec0',
+            align: 'center'
+          }
+        }
+      ]
+    }
+  ];
+
+  return (
+    <KapthaEmailEditor
+      apiKey="kpt_dev_ws001_demo12345678"
+      minHeight="600px"
+      customBlocks={customBlocks}
+      onReady={() => console.log('Editor ready!')}
+    />
+  );
+}
+
+export default App;
+```
+
+Custom blocks appear in the Elements panel with a Package icon and can be dragged onto the canvas. When dropped, all components in the block are inserted as a group.
+
 ## 🔑 API Keys
 
 ### Free Development Key (Available Now!)
@@ -102,12 +199,21 @@ interface KapthaEmailEditorProps {
   // Optional
   workspaceId?: string;
   minHeight?: string; // default: '600px'
+  customBlocks?: CustomBlock[]; // Custom reusable component groups
   onLoad?: () => void;
   onReady?: () => void;
   onDesignChange?: (design: EmailDesign) => void;
   initialDesign?: EmailDesign;
   className?: string;
   style?: React.CSSProperties;
+}
+
+interface CustomBlock {
+  id: string;                    // Unique identifier
+  name: string;                  // Display name in Elements panel
+  category?: string;             // Optional category for grouping
+  thumbnail?: string;            // Optional thumbnail URL
+  components: EmailComponent[];  // Array of components to insert
 }
 ```
 
