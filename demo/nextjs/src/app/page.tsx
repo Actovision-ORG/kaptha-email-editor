@@ -1,6 +1,6 @@
 'use client'
 
-import KapthaEmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor, { CustomBlock } from '@actovision/kaptha-email-editor';
 import styles from './page.module.css'
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
   };
 
   // Define custom blocks
-  const customBlocks = [
+  const customBlocks: CustomBlock[] = [
     {
       id: 'welcome-block',
       name: 'Welcome',
@@ -22,7 +22,7 @@ export default function Home() {
       components: [
         {
           id: 'text-welcome-1',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<h1>Welcome!</h1>',
             fontSize: '36px',
@@ -33,7 +33,7 @@ export default function Home() {
         },
         {
           id: 'text-welcome-2',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<p>Thank you for joining us. We are excited to have you!</p>',
             fontSize: '16px',
@@ -50,7 +50,7 @@ export default function Home() {
       components: [
         {
           id: 'button-cta',
-          type: 'button' as any,
+          type: 'button',
           props: {
             text: 'Take Action Now',
             href: 'https://example.com',
@@ -70,7 +70,7 @@ export default function Home() {
       components: [
         {
           id: 'text-contact',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<p>Questions? Contact us at support@example.com</p>',
             fontSize: '14px',
@@ -80,7 +80,7 @@ export default function Home() {
         },
         {
           id: 'divider-contact',
-          type: 'divider' as any,
+          type: 'divider',
           props: {
             color: '#e0e0e0',
             height: '1px'
@@ -98,13 +98,11 @@ export default function Home() {
       </header>
       <main className={styles.main}>
         <KapthaEmailEditor
-          {...{
-            apiKey: "kpt_dev_ws001_demo12345678",
-            minHeight: "calc(100vh - 140px)",
-            customBlocks: customBlocks,
-            onReady: handleReady,
-            onDesignChange: handleDesignChange
-          } as any}
+          apiKey="kpt_dev_ws001_demo12345678"
+          minHeight="calc(100vh - 140px)"
+          customBlocks={customBlocks}
+          onReady={handleReady}
+          onDesignChange={handleDesignChange}
         />
       </main>
     </div>

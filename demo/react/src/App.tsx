@@ -1,4 +1,4 @@
-import KapthaEmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor, { CustomBlock } from '@actovision/kaptha-email-editor';
 import './App.css';
 
 function App() {
@@ -12,7 +12,7 @@ function App() {
   };
 
   // Define custom blocks
-  const customBlocks = [
+  const customBlocks: CustomBlock[] = [
     {
       id: 'hero-section',
       name: 'Hero Section',
@@ -20,7 +20,7 @@ function App() {
       components: [
         {
           id: 'text-hero-1',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<h1>Welcome to Our Newsletter</h1>',
             fontSize: '32px',
@@ -31,7 +31,7 @@ function App() {
         },
         {
           id: 'text-hero-2',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<p>Stay updated with our latest news and updates.</p>',
             fontSize: '16px',
@@ -41,7 +41,7 @@ function App() {
         },
         {
           id: 'button-hero',
-          type: 'button' as any,
+          type: 'button',
           props: {
             text: 'Get Started',
             href: 'https://example.com',
@@ -59,7 +59,7 @@ function App() {
       components: [
         {
           id: 'text-promo',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<h2>Special Offer - 50% Off!</h2>',
             fontSize: '28px',
@@ -72,7 +72,7 @@ function App() {
         },
         {
           id: 'button-promo',
-          type: 'button' as any,
+          type: 'button',
           props: {
             text: 'Shop Now',
             href: 'https://example.com/sale',
@@ -90,7 +90,7 @@ function App() {
       components: [
         {
           id: 'social-footer',
-          type: 'social' as any,
+          type: 'social',
           props: {
             links: [
               { platform: 'facebook', url: 'https://facebook.com/yourpage' },
@@ -103,7 +103,7 @@ function App() {
         },
         {
           id: 'text-footer',
-          type: 'text' as any,
+          type: 'text',
           props: {
             text: '<p>© 2024 Your Company. All rights reserved.</p>',
             fontSize: '12px',
@@ -123,13 +123,11 @@ function App() {
       </header>
       <main>
         <KapthaEmailEditor
-          {...{
-            apiKey: "kpt_dev_ws001_demo12345678",
-            minHeight: "calc(100vh - 120px)",
-            customBlocks: customBlocks,
-            onReady: handleReady,
-            onDesignChange: handleDesignChange
-          } as any}
+          apiKey="kpt_dev_ws001_demo12345678"
+          minHeight="calc(100vh - 120px)"
+          customBlocks={customBlocks}
+          onReady={handleReady}
+          onDesignChange={handleDesignChange}
         />
       </main>
     </div>
