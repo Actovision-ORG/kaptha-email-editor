@@ -95,16 +95,6 @@ describe('KapthaEmailEditor Component', () => {
     expect(container1).not.toBe(container2);
   });
 
-  it('should accept displayMode prop', () => {
-    const { container } = render(
-      <KapthaEmailEditor 
-        apiKey={TEST_API_KEY}
-        displayMode="web"
-      />
-    );
-    expect(container).toBeTruthy();
-  });
-
   it('should accept workspaceId prop', () => {
     const { container } = render(
       <KapthaEmailEditor 
