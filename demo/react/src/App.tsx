@@ -1,5 +1,5 @@
 import KapthaEmailEditor from '@actovision/kaptha-email-editor';
-// @ts-expect-error - CustomBlock will be available in next npm release
+// @ts-ignore - CustomBlock in v2.1.0, will work when published to npm
 import type { CustomBlock } from '@actovision/kaptha-email-editor';
 import './App.css';
 
@@ -124,7 +124,7 @@ function App() {
         <p>Build beautiful emails with drag and drop - now with Custom Blocks!</p>
       </header>
       <main>
-        {/* @ts-expect-error - customBlocks will be available in next npm release */}
+        {/* @ts-ignore - customBlocks support in v2.1.0, will work when published to npm */}
         <KapthaEmailEditor
           apiKey="kpt_dev_ws001_demo12345678"
           minHeight="calc(100vh - 120px)"
