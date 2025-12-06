@@ -17,7 +17,7 @@ A lightweight React component that loads Kaptha Email Editor from CDN using a se
 - **📦 Custom Blocks** - Add reusable pre-built component groups to Elements panel
 - **📧 MJML Export** - Production-ready responsive emails
 - **🔧 TypeScript** - Full type safety included
-- **🚀 Framework Agnostic** - Core API can be used in any JavaScript framework
+- **🚀 Framework Agnostic** - Core uses `KapthaEmailEditor.createEditor()` global API
 - **⚡ Battle-Tested** - Verified with React 18.3.1 and React 19.2.0
 
 ## 📋 Requirements

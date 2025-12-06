@@ -28,8 +28,9 @@ import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 're
 
 // CDN Configuration
 const CDN_BASE_URL = 'https://code.kaptha.dev/core/embed';
-const CDN_JS_URL = `${CDN_BASE_URL}/editor.js?v=2024-12-06`;
-const CDN_CSS_URL = `${CDN_BASE_URL}/editor.css?v=2024-12-06`;
+const CACHE_VERSION = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+const CDN_JS_URL = `${CDN_BASE_URL}/editor.js?v=${CACHE_VERSION}`;
+const CDN_CSS_URL = `${CDN_BASE_URL}/editor.css?v=${CACHE_VERSION}`;
 
 export interface EmailDesign {
   components: any[];
@@ -92,12 +93,19 @@ interface KapthaEmailEditorProps {
 }
 
 // Script loader utility with API wait
+// Declare global type
+declare global {
+  interface Window {
+    KapthaEmailEditor?: any;
+  }
+}
+
 function loadScript(src: string): Promise<void> {
   return new Promise((resolve, reject) => {
     // Wait for API to be available (handles both new loads and cached scripts)
     const waitForAPI = () => {
       const checkAPI = () => {
-        if ((window as any).KapthaEmailEditor) {
+        if (typeof (window as any).KapthaEmailEditor !== 'undefined') {
           resolve();
         } else {
           setTimeout(checkAPI, 50);
@@ -217,14 +225,15 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
     if (!isLoaded || !containerRef.current) return;
 
     // Check if API is available
-    if (!(window as any).KapthaEmailEditor) {
-      setError('Kaptha Email Editor API not found on window');
+    const KapthaEmailEditor = (window as any).KapthaEmailEditor;
+    if (!KapthaEmailEditor) {
+      setError('Kaptha Email Editor API not found');
       return;
     }
 
     try {
       // Create editor instance using CDN API
-      editorInstanceRef.current = (window as any).KapthaEmailEditor.createEditor({
+      editorInstanceRef.current = KapthaEmailEditor.createEditor({
         container: containerRef.current,
         apiKey,
         minHeight,
