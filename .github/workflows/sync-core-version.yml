@@ -43,22 +43,18 @@ jobs:
 
       - name: Update CDN URLs in wrapper
         run: |
-          MAJOR="${{ steps.version.outputs.major }}"
+          VERSION="${{ steps.version.outputs.version }}"
           
-          # Update getCDNUrls function to return correct default path
-          # The default path uses root (editor.js) which points to current major version
-          # No changes needed unless we want to explicitly update comments or version references
-          
-          echo "✅ Wrapper uses root path by default - no changes needed"
-          echo "ℹ️  Users can pin to specific versions via KAPTHA_VERSION env var"
+          # Wrapper uses vanilla JS bundle from CDN
+          echo "✅ Wrapper uses /core/vanilla/editor.js"
+          echo "ℹ️  CDN automatically updated in deploy workflow"
 
       - name: Check for changes
         id: changes
         run: |
-          # In the hybrid approach, wrapper doesn't need updates
-          # It always uses root path which CDN updates automatically
+          # Wrapper uses vanilla JS bundle - no updates needed
           echo "has_changes=false" >> $GITHUB_OUTPUT
-          echo "ℹ️ No changes needed - wrapper uses flexible CDN path strategy"
+          echo "ℹ️ No changes needed - wrapper uses vanilla JS CDN bundle"
 
       - name: Create Pull Request
         if: steps.changes.outputs.has_changes == 'true'
@@ -76,14 +72,12 @@ jobs:
             
             ### Changes
             - Core updated to version `${{ steps.version.outputs.version }}`
-            - Wrapper uses hybrid CDN strategy (no changes needed)
+            - Wrapper uses vanilla JS bundle (no changes needed)
             
             ### Core Version Details
             - **Version**: ${{ steps.version.outputs.version }}
-            - **Major Version**: v${{ steps.version.outputs.major }}
-            - **Default CDN JS**: https://code.kaptha.dev/core/builder.js (auto-updates)
-            - **Default CDN CSS**: https://code.kaptha.dev/core/builder.css (auto-updates)
-            - **Pinned Version**: Use `KAPTHA_VERSION=${{ steps.version.outputs.version }}` to pin
+            - **CDN JS**: https://code.kaptha.dev/core/vanilla/editor.js
+            - **CDN CSS**: https://code.kaptha.dev/core/vanilla/editor.css
             
             ### Source
             - **Repository**: ${{ github.event.client_payload.source_repo || 'Manual trigger' }}
@@ -94,7 +88,7 @@ jobs:
             Please verify:
             - [ ] Wrapper builds successfully
             - [ ] Demo apps load correctly
-            - [ ] UMD bundle loads from new CDN path
+            - [ ] Vanilla JS bundle loads from CDN
             - [ ] All editor functionality works as expected
             
             ---
