@@ -18,36 +18,67 @@ npm run dev
 
 ## Features
 
-- Simple React integration
+- Simple React integration with CDN-based core editor
 - TypeScript support
 - Fast development with Vite
-- Export HTML and MJML
-- Save templates
+- Custom blocks and templates
+- Design change callbacks
+- Automatic cache busting for CDN resources
 
 ## Usage
 
 ```tsx
-import EmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor from '@actovision/kaptha-email-editor';
 
 function App() {
-  const handleExport = (html: string, mjml: string) => {
-    console.log('HTML:', html);
-    console.log('MJML:', mjml);
+  const handleReady = () => {
+    console.log('Editor ready!');
   };
 
+  const handleDesignChange = (design: any) => {
+    console.log('Design changed:', design);
+    // Save to your backend here
+  };
+
+  const customBlocks = [
+    {
+      id: 'custom-1',
+      name: 'Custom Block',
+      category: 'Custom',
+      components: [
+        {
+          id: 'text-1',
+          type: 'text',
+          props: {
+            text: '<h1>Custom Content</h1>',
+            fontSize: '24px'
+          }
+        }
+      ]
+    }
+  ];
+
   return (
-    <EmailEditor
-      height="600px"
-      onExport={handleExport}
-      initialTemplate={{
-        name: "My Template",
-        category: "custom",
-        components: [],
-      }}
+    <KapthaEmailEditor
+      apiKey="your-api-key"
+      onReady={handleReady}
+      onDesignChange={handleDesignChange}
+      customBlocks={customBlocks}
+      minHeight="600px"
     />
   );
 }
 ```
+
+### Required Props
+- `apiKey`: Your Kaptha API key (format: `kpt_dev_ws001_...` or `kpt_prod_...`)
+
+### Optional Props
+- `onReady`: Callback when editor is fully initialized
+- `onDesignChange`: Callback when design changes (includes full design object)
+- `initialDesign`: Load editor with existing design
+- `customBlocks`: Add custom reusable block templates
+- `minHeight`: Minimum height of editor container (default: `600px`)
 
 ## Build
 
