@@ -199,7 +199,30 @@ This package uses a **framework-agnostic core with React wrapper** architecture 
 - **CDN Bundle**: 391KB (113KB gzipped) - includes everything
 - **Total Download**: ~113KB gzipped for first load (cached thereafter)
 
-## 🔧 Direct CDN Usage
+### Cache Management (v3.0.0+)
+
+The wrapper automatically handles cache busting with date-based versioning:
+```typescript
+// Automatic: editor.js?v=2025-12-06
+// Updates daily to prevent stale caches
+```
+
+## 🎯 Framework Examples
+
+See complete working examples in the [`/demo`](./demo) folder:
+
+- **[React](./demo/react)** - Vite + React with TypeScript
+- **[Next.js](./demo/nextjs)** - App Router with client components
+- **[Vue 3](./demo/vue)** - Composition API with custom wrapper
+- **[Svelte](./demo/svelte)** - Reactive components with custom events
+
+Each demo includes:
+- Complete working application
+- TypeScript support
+- Custom blocks examples
+- README with setup instructions
+
+## 🔧 Direct CDN Usage (v3.0.0+)
 
 For non-React projects or direct usage:
 
@@ -214,7 +237,8 @@ For non-React projects or direct usage:
   
   <script src="https://code.kaptha.dev/core/embed/editor.js"></script>
   <script>
-    const editor = window.KapthaEmailEditor.createEditor({
+    // v3.0.0+: Use KapthaEmailEditor directly (no window prefix needed)
+    const editor = KapthaEmailEditor.createEditor({
       container: document.getElementById('editor-container'),
       apiKey: 'kpt_dev_ws001_demo12345678',
       minHeight: '600px',
@@ -224,6 +248,8 @@ For non-React projects or direct usage:
 </body>
 </html>
 ```
+
+**Note:** v3.0.0 introduces cleaner API - use `KapthaEmailEditor.createEditor()` instead of `window.KapthaEmailEditor.createEditor()` (window prefix still works but is deprecated).
 
 ## 🐛 Troubleshooting
 
@@ -242,6 +268,30 @@ For non-React projects or direct usage:
 
 - Ensure `@types/react` and `@types/react-dom` are installed
 - Check that TypeScript version is 4.7+
+
+## 📝 Changelog
+
+See [CHANGELOG.md](./CHANGELOG.md) for release history.
+
+### Latest: v3.0.0 (2024-12-06)
+
+**Breaking Changes:**
+- Cleaner API: Use `KapthaEmailEditor.createEditor()` instead of `window.KapthaEmailEditor.createEditor()`
+- Automatic cache busting with date-based versioning
+
+**New Features:**
+- Framework demos (React, Next.js, Vue, Svelte)
+- Improved test reliability
+- Better TypeScript declarations
+
+**Migration from v2.x:**
+```typescript
+// Before (v2.x)
+const editor = window.KapthaEmailEditor.createEditor({ ... });
+
+// After (v3.0.0)
+const editor = KapthaEmailEditor.createEditor({ ... });
+```
 
 ## 📄 License
 
