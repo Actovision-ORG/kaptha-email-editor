@@ -1,7 +1,39 @@
 'use client';
 
 import KapthaEmailEditor from '@actovision/kaptha-email-editor';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+
+// Define custom blocks outside component to prevent recreation on every render
+const CUSTOM_BLOCKS = [
+  {
+    id: 'welcome-block',
+    name: 'Welcome Block',
+    category: 'Marketing',
+    components: [
+      {
+        id: 'welcome-text',
+        type: 'text',
+        props: {
+          text: '<h1>Welcome to Next.js + Kaptha</h1>',
+          fontSize: '32px',
+          fontWeight: 'bold',
+          color: '#000000',
+          align: 'center'
+        }
+      },
+      {
+        id: 'welcome-desc',
+        type: 'text',
+        props: {
+          text: '<p>Build beautiful emails with ease.</p>',
+          fontSize: '16px',
+          color: '#666666',
+          align: 'center'
+        }
+      }
+    ]
+  }
+];
 
 export default function Home() {
   const [design, setDesign] = useState<any>(null);
@@ -15,37 +47,6 @@ export default function Home() {
     setDesign(newDesign);
   };
 
-  const customBlocks = [
-    {
-      id: 'welcome-block',
-      name: 'Welcome Block',
-      category: 'Marketing',
-      components: [
-        {
-          id: 'welcome-text',
-          type: 'text',
-          props: {
-            text: '<h1>Welcome to Next.js + Kaptha</h1>',
-            fontSize: '32px',
-            fontWeight: 'bold',
-            color: '#000000',
-            align: 'center'
-          }
-        },
-        {
-          id: 'welcome-desc',
-          type: 'text',
-          props: {
-            text: '<p>Build beautiful emails with ease.</p>',
-            fontSize: '16px',
-            color: '#666666',
-            align: 'center'
-          }
-        }
-      ]
-    }
-  ];
-
   return (
     <main style={{ padding: '20px' }}>
       <h1 style={{ marginBottom: '20px' }}>Kaptha Email Editor - Next.js Demo</h1>
@@ -53,7 +54,7 @@ export default function Home() {
         apiKey="kpt_dev_ws001_demo12345678"
         onReady={handleReady}
         onDesignChange={handleDesignChange}
-        customBlocks={customBlocks}
+        customBlocks={CUSTOM_BLOCKS}
         minHeight="600px"
       />
       {design && (
