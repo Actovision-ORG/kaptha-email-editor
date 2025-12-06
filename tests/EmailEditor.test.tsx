@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import KapthaEmailEditor from '../src/index';
 
@@ -130,45 +130,42 @@ describe('KapthaEmailEditor Component', () => {
     expect(container).toBeTruthy();
   });
 
-  it('should load CSS from CDN', () => {
+  it('should load CSS from CDN', async () => {
     render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
-    
-    // Wait a tick for useEffect to run
-    setTimeout(() => {
+    await waitFor(() => {
       const cssLink = document.querySelector('link[href*="code.kaptha.dev/core/embed/editor.css"]');
       expect(cssLink).toBeTruthy();
-    }, 0);
+    });
   });
 
-  it('should load JavaScript from CDN', () => {
+  it('should load JavaScript from CDN', async () => {
     render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
-    
-    // Wait a tick for useEffect to run
-    setTimeout(() => {
+    await waitFor(() => {
       const script = document.querySelector('script[src*="code.kaptha.dev/core/embed/editor.js"]');
       expect(script).toBeTruthy();
-    }, 0);
+    });
   });
 
-  it('should use correct CDN base URL', () => {
+  it('should use correct CDN base URL', async () => {
     const { container } = render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
     expect(container).toBeTruthy();
-    
-    // CDN should be code.kaptha.dev/core/embed/
-    setTimeout(() => {
+    await waitFor(() => {
       const script = document.querySelector('script[src*="/core/embed/"]');
       expect(script).toBeTruthy();
-    }, 0);
+    });
   });
 
-  it('should include cache-busting parameter in CDN URLs', () => {
+  it('should include cache-busting parameter in CDN URLs', async () => {
     render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
     
-    setTimeout(() => {
-      const script = document.querySelector('script[src*="?v=2024-12-06"]');
-      const link = document.querySelector('link[href*="?v=2024-12-06"]');
+    // Get today's date in YYYY-MM-DD format (same calculation as the component)
+    const today = new Date().toISOString().split('T')[0];
+    
+    await waitFor(() => {
+      const script = document.querySelector(`script[src*="?v=${today}"]`);
+      const link = document.querySelector(`link[href*="?v=${today}"]`);
       expect(script).toBeTruthy();
       expect(link).toBeTruthy();
-    }, 0);
+    });
   });
 });

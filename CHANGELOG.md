@@ -5,6 +5,49 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0] - 2024-12-06
+
+### ⚠️ BREAKING CHANGES
+
+Major API cleanup and improved developer experience.
+
+#### API Changes
+- **Cleaner Global API**: Use `KapthaEmailEditor.createEditor()` directly instead of `window.KapthaEmailEditor.createEditor()`
+- Core bundle now exports `KapthaEmailEditor` as a global variable (window prefix still works but deprecated)
+- Named export `createEditor` available for module imports
+
+#### Cache Management
+- **Automatic Cache Busting**: CDN URLs now include automatic date-based versioning
+- Format: `editor.js?v=YYYY-MM-DD` updates daily to prevent stale caches
+- Dynamic calculation: `CACHE_VERSION = new Date().toISOString().split('T')[0]`
+
+#### Testing Improvements
+- Fixed flaky CDN tests using `waitFor` instead of raw `setTimeout`
+- Cache-busting test now uses dynamic date calculation instead of hardcoded date
+- All 16 unit tests passing reliably
+
+#### Examples
+- Added React example in `kaptha-email-editor-core/examples/react/`
+- Demonstrates local development workflow using build artifacts
+- Clean API usage without window prefix
+
+### Migration Guide
+
+**Before (v2.x):**
+```typescript
+const editor = window.KapthaEmailEditor.createEditor({ ... });
+```
+
+**After (v3.0.0):**
+```typescript
+const editor = KapthaEmailEditor.createEditor({ ... });
+```
+
+### Changed
+- Updated all documentation to use cleaner API (removed `window.` prefix)
+- Wrapper package automatically handles cache invalidation
+- Published to npm as `@actovision/kaptha-email-editor@3.0.0`
+
 ## [2.1.0] - 2024-12-06
 
 ### Changed
