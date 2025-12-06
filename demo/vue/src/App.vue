@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
 import KapthaEmailEditorWrapper from './components/KapthaEmailEditorWrapper.vue';
 
 const design = ref<any>(null);
@@ -29,6 +29,7 @@ const handleDesignChange = (newDesign: any) => {
   design.value = newDesign;
 };
 
+// Define custom blocks as a constant to prevent recreation
 const customBlocks = [
   {
     id: 'vue-welcome',
