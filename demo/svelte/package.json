@@ -10,7 +10,7 @@
     "check": "svelte-check --tsconfig ./tsconfig.json"
   },
   "dependencies": {
-    "@actovision/kaptha-email-editor": "^3.0.0"
+    "@actovision/kaptha-email-editor": "^3.0.1"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
