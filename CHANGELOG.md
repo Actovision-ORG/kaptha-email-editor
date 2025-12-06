@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.1] - 2024-12-06
+
+### Fixed
+- Updated all demo applications to use published npm package instead of local workspace
+- Fixed infinite re-render loop in React and Next.js demos by moving customBlocks outside render scope
+- Improved build compatibility for deployment platforms
+
+### Documentation
+- Updated README with framework demos section
+- Added v3.0.0 migration guide and changelog
+- Documented cache management with automatic date-based versioning
+
 ## [3.0.0] - 2024-12-06
 
 ### ⚠️ BREAKING CHANGES
