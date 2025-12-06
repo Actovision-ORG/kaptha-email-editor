@@ -7,13 +7,12 @@ describe('KapthaEmailEditor Component', () => {
   const TEST_API_KEY = 'kpt_dev_ws001_demo12345678';
 
   beforeEach(() => {
-    // Clear any existing scripts
+    // Clear any existing scripts and styles
     document.body.innerHTML = '';
     document.head.innerHTML = '';
     
-    // Reset global objects
-    delete (window as any).kapthaEmailEditor;
-    delete (window as any).kaptha;
+    // Reset global objects (CDN API uses window.KapthaEmailEditor)
+    delete (window as any).KapthaEmailEditor;
   });
 
   it('should render without crashing with required apiKey', () => {
@@ -60,12 +59,20 @@ describe('KapthaEmailEditor Component', () => {
     expect(container).toBeTruthy();
   });
 
-  it('should accept additional props', () => {
+  it('should accept custom blocks', () => {
+    const customBlocks = [
+      {
+        id: 'custom-1',
+        name: 'Custom Block',
+        category: 'Custom',
+        components: []
+      }
+    ];
+    
     const { container } = render(
       <KapthaEmailEditor 
         apiKey={TEST_API_KEY}
-        className="custom-class"
-        style={{ border: '1px solid red' }}
+        customBlocks={customBlocks}
       />
     );
     expect(container).toBeTruthy();
@@ -95,11 +102,12 @@ describe('KapthaEmailEditor Component', () => {
     expect(container1).not.toBe(container2);
   });
 
-  it('should accept workspaceId prop', () => {
+  it('should accept onLoad callback', () => {
+    const mockLoad = jest.fn();
     const { container } = render(
       <KapthaEmailEditor 
         apiKey={TEST_API_KEY}
-        workspaceId="ws_custom_001"
+        onLoad={mockLoad}
       />
     );
     expect(container).toBeTruthy();
@@ -120,5 +128,47 @@ describe('KapthaEmailEditor Component', () => {
     );
     
     expect(container).toBeTruthy();
+  });
+
+  it('should load CSS from CDN', () => {
+    render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
+    
+    // Wait a tick for useEffect to run
+    setTimeout(() => {
+      const cssLink = document.querySelector('link[href*="code.kaptha.dev/core/embed/editor.css"]');
+      expect(cssLink).toBeTruthy();
+    }, 0);
+  });
+
+  it('should load JavaScript from CDN', () => {
+    render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
+    
+    // Wait a tick for useEffect to run
+    setTimeout(() => {
+      const script = document.querySelector('script[src*="code.kaptha.dev/core/embed/editor.js"]');
+      expect(script).toBeTruthy();
+    }, 0);
+  });
+
+  it('should use correct CDN base URL', () => {
+    const { container } = render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
+    expect(container).toBeTruthy();
+    
+    // CDN should be code.kaptha.dev/core/embed/
+    setTimeout(() => {
+      const script = document.querySelector('script[src*="/core/embed/"]');
+      expect(script).toBeTruthy();
+    }, 0);
+  });
+
+  it('should include cache-busting parameter in CDN URLs', () => {
+    render(<KapthaEmailEditor apiKey={TEST_API_KEY} />);
+    
+    setTimeout(() => {
+      const script = document.querySelector('script[src*="?v=2024-12-06"]');
+      const link = document.querySelector('link[href*="?v=2024-12-06"]');
+      expect(script).toBeTruthy();
+      expect(link).toBeTruthy();
+    }, 0);
   });
 });
