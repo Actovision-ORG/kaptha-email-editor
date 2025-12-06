@@ -2,7 +2,7 @@
  * @actovision/kaptha-email-editor - React Wrapper for Kaptha Email Editor
  * 
  * This package provides a React component wrapper that loads Kaptha Email Editor
- * from CDN as a vanilla JS bundle and provides a React interface.
+ * from CDN as a self-contained bundle and provides a React interface.
  * 
  * The CDN bundle is framework-agnostic and includes its own React instance,
  * eliminating React version conflicts.
@@ -27,9 +27,9 @@ import * as React from 'react';
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
 
 // CDN Configuration
-const CDN_BASE_URL = 'https://code.kaptha.dev/core/vanilla';
-const CDN_JS_URL = `${CDN_BASE_URL}/editor.js?v=2024-12-05`;
-const CDN_CSS_URL = `${CDN_BASE_URL}/editor.css?v=2024-12-05`;
+const CDN_BASE_URL = 'https://code.kaptha.dev/core/embed';
+const CDN_JS_URL = `${CDN_BASE_URL}/editor.js?v=2024-12-06`;
+const CDN_CSS_URL = `${CDN_BASE_URL}/editor.css?v=2024-12-06`;
 
 export interface EmailDesign {
   components: any[];
@@ -216,14 +216,14 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
 
-    // Check if vanilla API is available
+    // Check if API is available
     if (!(window as any).KapthaEmailEditor) {
       setError('Kaptha Email Editor API not found on window');
       return;
     }
 
     try {
-      // Create editor instance using vanilla API
+      // Create editor instance using CDN API
       editorInstanceRef.current = (window as any).KapthaEmailEditor.createEditor({
         container: containerRef.current,
         apiKey,

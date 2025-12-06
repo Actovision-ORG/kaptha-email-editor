@@ -45,16 +45,16 @@ jobs:
         run: |
           VERSION="${{ steps.version.outputs.version }}"
           
-          # Wrapper uses vanilla JS bundle from CDN
-          echo "✅ Wrapper uses /core/vanilla/editor.js"
+          # Wrapper uses self-contained bundle from CDN
+          echo "✅ Wrapper uses /core/embed/editor.js"
           echo "ℹ️  CDN automatically updated in deploy workflow"
 
       - name: Check for changes
         id: changes
         run: |
-          # Wrapper uses vanilla JS bundle - no updates needed
+          # Wrapper uses self-contained CDN bundle - no updates needed
           echo "has_changes=false" >> $GITHUB_OUTPUT
-          echo "ℹ️ No changes needed - wrapper uses vanilla JS CDN bundle"
+          echo "ℹ️ No changes needed - wrapper uses CDN bundle"
 
       - name: Create Pull Request
         if: steps.changes.outputs.has_changes == 'true'
@@ -72,12 +72,12 @@ jobs:
             
             ### Changes
             - Core updated to version `${{ steps.version.outputs.version }}`
-            - Wrapper uses vanilla JS bundle (no changes needed)
+            - Wrapper uses self-contained CDN bundle (no changes needed)
             
             ### Core Version Details
             - **Version**: ${{ steps.version.outputs.version }}
-            - **CDN JS**: https://code.kaptha.dev/core/vanilla/editor.js
-            - **CDN CSS**: https://code.kaptha.dev/core/vanilla/editor.css
+            - **CDN JS**: https://code.kaptha.dev/core/embed/editor.js
+            - **CDN CSS**: https://code.kaptha.dev/core/embed/editor.css
             
             ### Source
             - **Repository**: ${{ github.event.client_payload.source_repo || 'Manual trigger' }}
@@ -88,7 +88,7 @@ jobs:
             Please verify:
             - [ ] Wrapper builds successfully
             - [ ] Demo apps load correctly
-            - [ ] Vanilla JS bundle loads from CDN
+            - [ ] CDN bundle loads from https://code.kaptha.dev/core/embed/
             - [ ] All editor functionality works as expected
             
             ---
