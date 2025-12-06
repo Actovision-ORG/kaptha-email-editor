@@ -1,6 +1,6 @@
 # Kaptha Email Editor - Next.js Demo
 
-This is a Next.js App Router demo application that demonstrates how to use `@actovision/kaptha-email-editor`.
+This demo shows how to integrate `@actovision/kaptha-email-editor` in a Next.js 14 application with App Router.
 
 ## Getting Started
 
@@ -14,85 +14,49 @@ npm install
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Open [http://localhost:3000](http://localhost:3000)
 
 ## Features
 
 - Next.js 14 App Router
-- TypeScript support
 - Client-side rendering with 'use client'
-- Export HTML and MJML
-- Save templates
+- TypeScript support
+- Custom blocks and design callbacks
+- Automatic CDN loading
 
 ## Usage
 
-Since the email editor needs DOM access, make sure to use it in a client component:
+Since Kaptha Email Editor uses browser-specific APIs, you need to use the `'use client'` directive:
 
 ```tsx
-'use client'
+'use client';
 
-import EmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor from '@actovision/kaptha-email-editor';
 
 export default function Page() {
-  const handleExport = (html: string, mjml: string) => {
-    console.log('HTML:', html);
-    console.log('MJML:', mjml);
+  const handleReady = () => {
+    console.log('Editor ready!');
   };
 
   return (
-    <EmailEditor
-      height="600px"
-      onExport={handleExport}
-      initialTemplate={{
-        name: "My Template",
-        category: "custom",
-        components: [],
-      }}
+    <KapthaEmailEditor
+      apiKey="your-api-key"
+      onReady={handleReady}
+      minHeight="600px"
     />
   );
 }
 ```
 
-## Build
+## Build for Production
 
 ```bash
 npm run build
-```
-
-## Start Production Server
-
-```bash
 npm start
 ```
 
-## Testing
+## Notes
 
-### E2E Tests with Cypress
-
-Run Cypress in interactive mode:
-```bash
-npm run test:e2e
-```
-
-Run Cypress in headless mode (CI):
-```bash
-npm run test:e2e:ci
-```
-
-**Test Coverage:**
-- Next.js App Router compatibility
-- Client component rendering
-- Editor loading and initialization
-- Hydration handling
-- Error handling and edge cases
-- Responsive design across viewports
-
-### Running Tests in CI
-
-The tests automatically run in GitHub Actions on push and pull requests. Videos and screenshots are saved as artifacts when tests fail.
-
-## Learn More
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Kaptha Email Editor](https://github.com/Actovision-ORG/kaptha-email-editor)
-- [Cypress Documentation](https://docs.cypress.io)
+- The editor must be used in a Client Component (`'use client'`)
+- Make sure your API key is properly configured
+- CDN resources are automatically cached with date-based versioning
