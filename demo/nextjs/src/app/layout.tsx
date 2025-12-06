@@ -1,9 +1,8 @@
 import type { Metadata } from 'next'
-import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Kaptha Email Editor - Next.js Demo',
-  description: 'Build beautiful emails with drag and drop',
+  description: 'Demo of Kaptha Email Editor in Next.js',
 }
 
 export default function RootLayout({
@@ -13,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body style={{ margin: 0, fontFamily: 'system-ui, sans-serif' }}>{children}</body>
     </html>
   )
 }

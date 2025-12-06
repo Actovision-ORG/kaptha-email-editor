@@ -10,8 +10,8 @@ A React application using Vite that demonstrates the basic integration of the em
 **Features:**
 - Vite for fast development
 - TypeScript support
-- Simple React integration
-- Export and save functionality
+- Custom blocks and callbacks
+- CDN-based core editor
 
 **Quick Start:**
 ```bash
@@ -26,7 +26,7 @@ A Next.js 14 App Router application showing how to use the editor in a server-si
 **Features:**
 - Next.js 14 with App Router
 - TypeScript support
-- Client-side component usage
+- Client-side component usage (`'use client'`)
 - Production-ready setup
 
 **Quick Start:**
@@ -36,18 +36,113 @@ npm install
 npm run dev
 ```
 
-## Common Usage
+### [Vue 3 Demo](./vue)
+A Vue 3 application with Composition API demonstrating the editor integration.
 
-All demos follow the same basic pattern:
+**Features:**
+- Vue 3 with `<script setup>` syntax
+- TypeScript support
+- Reactive design state
+- Custom wrapper component
+- Vite for fast development
+
+**Quick Start:**
+```bash
+cd vue
+npm install
+npm run dev
+```
+
+### [Svelte Demo](./svelte)
+A Svelte 4 application showing reactive integration with the email editor.
+
+**Features:**
+- Svelte 4 with TypeScript
+- Custom events for callbacks
+- Reactive state management
+- Clean component lifecycle
+- Vite for fast development
+
+**Quick Start:**
+```bash
+cd svelte
+npm install
+npm run dev
+```
+
+## Common Usage Patterns
+
+### React / Next.js
 
 ```tsx
-import EmailEditor from '@actovision/kaptha-email-editor';
+import KapthaEmailEditor from '@actovision/kaptha-email-editor';
 
 function App() {
-  const handleExport = (html: string, mjml: string) => {
-    console.log('HTML:', html);
-    console.log('MJML:', mjml);
+  const handleReady = () => {
+    console.log('Editor ready!');
+  };
+
+  const handleDesignChange = (design: any) => {
+    console.log('Design changed:', design);
     // Save to your backend
+  };
+
+  return (
+    <KapthaEmailEditor
+      apiKey="kpt_dev_ws001_demo12345678"
+      onReady={handleReady}
+      onDesignChange={handleDesignChange}
+      minHeight="600px"
+    />
+  );
+}
+```
+
+### Vue 3
+
+```vue
+<template>
+  <KapthaEmailEditorWrapper
+    api-key="kpt_dev_ws001_demo12345678"
+    :on-ready="handleReady"
+    :on-design-change="handleDesignChange"
+    min-height="600px"
+  />
+</template>
+
+<script setup lang="ts">
+const handleReady = () => {
+  console.log('Editor ready!');
+};
+
+const handleDesignChange = (design: any) => {
+  console.log('Design changed:', design);
+};
+</script>
+```
+
+### Svelte
+
+```svelte
+<script lang="ts">
+  import KapthaEmailEditor from './lib/KapthaEmailEditor.svelte';
+
+  function handleReady() {
+    console.log('Editor ready!');
+  }
+
+  function handleDesignChange(event: CustomEvent<any>) {
+    console.log('Design changed:', event.detail);
+  }
+</script>
+
+<KapthaEmailEditor
+  apiKey="kpt_dev_ws001_demo12345678"
+  on:ready={handleReady}
+  on:designChange={handleDesignChange}
+  minHeight="600px"
+/>
+```
   };
 
   const handleSave = (template: any) => {
