@@ -9,12 +9,21 @@ This is a React demo application using Vite that demonstrates how to use `@actov
 npm install
 ```
 
-2. Start the development server:
+2. Set up environment variables:
+```bash
+# Copy the example env file
+cp .env.example .env
+
+# Edit .env and add your Kaptha API key
+# VITE_KAPTHA_API_KEY=your_api_key_here
+```
+
+3. Start the development server:
 ```bash
 npm run dev
 ```
 
-3. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`)
+4. Open your browser and navigate to the URL shown in the terminal (usually `http://localhost:5173`)
 
 ## Features
 

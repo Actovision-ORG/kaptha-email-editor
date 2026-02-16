@@ -127,7 +127,7 @@ function App() {
       </header>
       <main>
         <KapthaEmailEditor
-          apiKey="kpt_dev_ws001_demo12345678"
+          apiKey={import.meta.env.VITE_KAPTHA_API_KEY}
           minHeight="calc(100vh - 120px)"
           customBlocks={CUSTOM_BLOCKS}
           onReady={handleReady}
