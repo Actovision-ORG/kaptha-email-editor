@@ -11,6 +11,8 @@
   let containerRef: HTMLDivElement;
   let editorInstance: any = null;
   let loaded = false;
+  let validationStatus: 'validating' | 'success' | 'error' = 'validating';
+  let error: string | null = null;
 
   // Declare global KapthaEmailEditor
   declare global {
@@ -57,11 +59,15 @@
         throw new Error('Failed to load Kaptha Email Editor');
       }
 
+      loaded = true;
+
+      // Create editor instance using synchronous API
+      // Validation happens in background, onReady is called after validation
       editorInstance = window.KapthaEmailEditor.createEditor({
         container: containerRef,
         apiKey,
         onReady: () => {
-          loaded = true;
+          validationStatus = 'success';
           dispatch('ready');
         },
         onChange: (design: any) => {
@@ -69,9 +75,17 @@
         },
         initialDesign,
         customBlocks,
+        onError: (err: Error) => {
+          validationStatus = 'error';
+          error = err.message || 'Failed to initialize editor';
+          dispatch('error', err);
+        },
       });
-    } catch (error) {
-      console.error('Failed to initialize editor:', error);
+    } catch (err: any) {
+      validationStatus = 'error';
+      error = err.message || 'Failed to load editor resources';
+      dispatch('error', err);
+      console.error('Failed to initialize editor:', err);
     }
   });
 
@@ -86,6 +100,14 @@
   {#if !loaded}
     <div style="padding: 20px; text-align: center; color: #666;">
       Loading Kaptha Email Editor...
+    </div>
+  {:else if validationStatus === 'validating'}
+    <div style="padding: 20px; text-align: center; color: #666;">
+      Validating API key...
+    </div>
+  {:else if error}
+    <div style="padding: 20px; color: #e53e3e; border: 1px solid #fc8181; border-radius: 6px; background-color: #fff5f5;">
+      <strong>Error loading Kaptha Email Editor:</strong> {error}
     </div>
   {/if}
 </div>

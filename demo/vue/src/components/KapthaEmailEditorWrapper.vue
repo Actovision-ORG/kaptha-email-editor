@@ -3,6 +3,12 @@
     <div v-if="!loaded" style="padding: 20px; text-align: center; color: #666;">
       Loading Kaptha Email Editor...
     </div>
+    <div v-else-if="validationStatus === 'validating'" style="padding: 20px; text-align: center; color: #666;">
+      Validating API key...
+    </div>
+    <div v-else-if="error" style="padding: 20px; color: #e53e3e; border: 1px solid #fc8181; border-radius: 6px; background-color: #fff5f5;">
+      <strong>Error loading Kaptha Email Editor:</strong> {{ error }}
+    </div>
   </div>
 </template>
 
@@ -20,6 +26,7 @@ const props = defineProps<{
   apiKey: string;
   onReady?: () => void;
   onDesignChange?: (design: any) => void;
+  onError?: (error: Error) => void;
   initialDesign?: any;
   customBlocks?: any[];
   minHeight?: string;
@@ -28,6 +35,8 @@ const props = defineProps<{
 const containerRef = ref<HTMLDivElement | null>(null);
 const editorInstance = ref<any>(null);
 const loaded = ref(false);
+const validationStatus = ref<'validating' | 'success' | 'error'>('validating');
+const error = ref<string | null>(null);
 
 const loadScript = (src: string): Promise<void> => {
   return new Promise((resolve, reject) => {
@@ -67,19 +76,35 @@ onMounted(async () => {
       throw new Error('Failed to load Kaptha Email Editor');
     }
 
+    loaded.value = true;
+
+    // Create editor instance using synchronous API
+    // Validation happens in background, onReady is called after validation
     editorInstance.value = window.KapthaEmailEditor.createEditor({
       container: containerRef.value,
       apiKey: props.apiKey,
       onReady: () => {
-        loaded.value = true;
+        validationStatus.value = 'success';
         props.onReady?.();
       },
       onChange: props.onDesignChange,
       initialDesign: props.initialDesign,
       customBlocks: props.customBlocks,
+      onError: (err: Error) => {
+        validationStatus.value = 'error';
+        error.value = err.message || 'Failed to initialize editor';
+        if (props.onError) {
+          props.onError(err);
+        }
+      },
     });
-  } catch (error) {
-    console.error('Failed to initialize editor:', error);
+  } catch (err: any) {
+    validationStatus.value = 'error';
+    error.value = err.message || 'Failed to load editor resources';
+    if (props.onError) {
+      props.onError(err);
+    }
+    console.error('Failed to initialize editor:', err);
   }
 });
 

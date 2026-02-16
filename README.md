@@ -10,21 +10,20 @@ A lightweight React component that loads Kaptha Email Editor from CDN using a se
 
 ## ✨ Features
 
-- **🔑 API Key Authentication** - Secure access with API key validation
-- **📦 CDN-Based** - Self-contained bundle (113KB gzipped) with React bundled internally
-- **🎯 Zero React Conflicts** - Works with React 18 and React 19 without version conflicts
-- **🎨 Drag-and-Drop** - Intuitive email builder interface with react-dnd included
-- **📦 Custom Blocks** - Add reusable pre-built component groups to Elements panel
-- **📧 MJML Export** - Production-ready responsive emails
-- **🔧 TypeScript** - Full type safety included
-- **🚀 Framework Agnostic** - Core uses `KapthaEmailEditor.createEditor()` global API
-- **⚡ Battle-Tested** - Verified with React 18.3.1 and React 19.2.0
+- **🔑 API Key Authentication** - Secure access with background validation and retry logic
+- **📦 Zero Dependencies** - CDN-based bundle (113KB gzipped) with React bundled internally
+- **🎯 Universal Compatibility** - Works with React 18, 19, Vue, Svelte, Angular, and vanilla JS
+- **🎨 Drag-and-Drop** - Intuitive visual email builder with 10+ components
+- **🧩 Custom Blocks** - Create reusable component groups for your brand
+- **📧 MJML Export** - Production-ready responsive HTML emails
+- **🔧 TypeScript** - Full type safety with comprehensive interfaces
+- **⚡ Industry Standard API** - Synchronous initialization matching email editor best practices
 
 ## 📋 Requirements
 
 - React ^18.0.0 || ^19.0.0
 - React DOM ^18.0.0 || ^19.0.0
-- API key (get yours at: hello@kaptha.com)
+- API key (get yours at: https://app.kaptha.com)
 
 ## 📦 Installation
 
@@ -58,14 +57,15 @@ function App() {
         apiKey="kpt_dev_ws001_demo12345678"
         minHeight="600px"
         onReady={() => console.log('Editor ready!')}
+        onError={(error) => console.error('Init failed:', error)}
       />
-      <button onClick={handleExport}>Export</button>
+      <button onClick={handleExport}>Export HTML</button>
     </>
   );
 }
-
-export default App;
 ```
+
+> **Note:** Editor renders immediately. API validation happens in background. Use `onReady` to know when validation completes.
 
 ## 📚 API Reference
 
@@ -73,13 +73,14 @@ export default App;
 
 | Prop | Type | Required | Default | Description |
 |------|------|----------|---------|-------------|
-| `apiKey` | `string` | ✅ Yes | - | Your API key from hello@kaptha.com |
+| `apiKey` | `string` | ✅ Yes | - | Your API key from https://app.kaptha.com |
 | `minHeight` | `string` | No | `'600px'` | Minimum height of the editor |
 | `customBlocks` | `CustomBlock[]` | No | `[]` | Custom reusable blocks |
 | `initialDesign` | `EmailDesign` | No | - | Initial email design to load |
-| `onReady` | `() => void` | No | - | Called when editor is ready |
+| `onReady` | `() => void` | No | - | Called when editor is ready (after API validation) |
 | `onDesignChange` | `(design: EmailDesign) => void` | No | - | Called when design changes |
 | `onLoad` | `() => void` | No | - | Called when CDN resources load |
+| `onError` | `(error: Error) => void` | No | - | Called on initialization errors (e.g., invalid API key) |
 
 ### Ref Methods
 
@@ -172,40 +173,21 @@ const customBlocks = [
 
 ## 🏗️ Architecture
 
-This package uses a **framework-agnostic core with React wrapper** architecture for maximum compatibility:
+**Framework-agnostic core + lightweight wrappers** for maximum compatibility:
 
-### How It Works
+| Component | Size | Description |
+|-----------|------|-------------|
+| **CDN Bundle** | 113KB (gzipped) | Self-contained editor with React, react-dnd, all components |
+| **React Wrapper** | 5KB | This npm package - loads CDN and provides React API |
+| **Total Download** | ~113KB | First load only (cached with automatic versioning) |
 
-1. **CDN Bundle** (`editor.js`): Self-contained JavaScript bundle with React bundled internally
-   - Size: 391KB raw (113KB gzipped)
-   - Includes: React, ReactDOM, react-dnd, react-dnd-html5-backend
-   - URL: `https://code.kaptha.dev/core/embed/editor.js`
+### Why This Approach?
 
-2. **React Wrapper** (this package): Lightweight component that loads and wraps the core API
-   - Size: ~5KB wrapper code
-   - Loads core bundle from CDN automatically
-   - Provides React-friendly props and ref interface
-
-### Benefits
-
-- **Zero Version Conflicts**: Parent app and core bundle use separate React instances
-- **Smaller App Bundles**: Core editor loaded from CDN, not bundled with your app
-- **Framework Flexibility**: Core API can be used directly in Vue, Angular, etc.
-- **Automatic Updates**: CDN bundle updates don't require npm update
-
-### Bundle Sizes
-
-- **React Wrapper**: ~5KB (this npm package)
-- **CDN Bundle**: 391KB (113KB gzipped) - includes everything
-- **Total Download**: ~113KB gzipped for first load (cached thereafter)
-
-### Cache Management (v3.0.0+)
-
-The wrapper automatically handles cache busting with date-based versioning:
-```typescript
-// Automatic: editor.js?v=2025-12-06
-// Updates daily to prevent stale caches
-```
+✅ **Zero Conflicts** - CDN bundle uses isolated React instance  
+✅ **Smaller Builds** - Editor not bundled with your app  
+✅ **Framework Agnostic** - Works with React, Vue, Svelte, vanilla JS  
+✅ **Auto Cache Busting** - Daily versioning (`editor.js?v=2026-02-16`)  
+✅ **Background Validation** - Non-blocking API key checks with retry logic
 
 ## 🎯 Framework Examples
 
@@ -222,9 +204,9 @@ Each demo includes:
 - Custom blocks examples
 - README with setup instructions
 
-## 🔧 Direct CDN Usage (v3.0.0+)
+## 🔧 Direct CDN Usage
 
-For non-React projects or direct usage:
+For non-React projects (Vue, Svelte, vanilla JS):
 
 ```html
 <!DOCTYPE html>
@@ -237,61 +219,75 @@ For non-React projects or direct usage:
   
   <script src="https://code.kaptha.dev/core/embed/editor.js"></script>
   <script>
-    // v3.0.0+: Use KapthaEmailEditor directly (no window prefix needed)
+    // Synchronous API - editor renders immediately
     const editor = KapthaEmailEditor.createEditor({
       container: document.getElementById('editor-container'),
       apiKey: 'kpt_dev_ws001_demo12345678',
       minHeight: '600px',
-      onReady: () => console.log('Ready!')
+      onReady: () => console.log('Ready!'), // Called after validation
+      onError: (err) => console.error('Failed:', err)
     });
+    
+    // Editor instance available immediately
+    // Methods work right away (queued internally if needed)
+    editor.loadDesign({ components: [] });
   </script>
 </body>
 </html>
 ```
 
-**Note:** v3.0.0 introduces cleaner API - use `KapthaEmailEditor.createEditor()` instead of `window.KapthaEmailEditor.createEditor()` (window prefix still works but is deprecated).
+> **Industry Standard:** Follows the common email editor API pattern. Editor renders immediately, validation happens in background.
 
 ## 🐛 Troubleshooting
 
-### Editor not loading
+| Issue | Solution |
+|-------|----------|
+| **Editor not rendering** | Check console errors, verify CDN access |
+| **"Invalid API key" error** | Get valid key from https://app.kaptha.com |
+| **Validation slow** | Normal - background validation with retry (up to 7s) |
+| **React conflicts** | Not possible - CDN bundle uses isolated React instance |
+| **TypeScript errors** | Install `@types/react` and `@types/react-dom` |
 
-- Check browser console for errors
-- Verify API key is valid
-- Ensure internet connection (CDN access required)
+### Pattern Comparison
 
-### React version conflicts
+```typescript
+// ✅ Correct - Synchronous initialization
+const editor = KapthaEmailEditor.createEditor({ 
+  apiKey: 'key',
+  onReady: () => console.log('Validated'),
+  onError: (err) => console.error(err)
+});
 
-- This package is designed to avoid conflicts by bundling React internally
-- Works with both React 18 and React 19 parent apps
-
-### TypeScript errors
-
-- Ensure `@types/react` and `@types/react-dom` are installed
-- Check that TypeScript version is 4.7+
+// ✅ Also works - Chain methods immediately
+editor.loadDesign({ components: [] });
+```
 
 ## 📝 Changelog
 
-See [CHANGELOG.md](./CHANGELOG.md) for release history.
+See [CHANGELOG.md](./CHANGELOG.md) for full release history.
 
-### Latest: v3.0.0 (2024-12-06)
+### Latest: v3.2.0 (2026-02-16)
 
-**Breaking Changes:**
-- Cleaner API: Use `KapthaEmailEditor.createEditor()` instead of `window.KapthaEmailEditor.createEditor()`
-- Automatic cache busting with date-based versioning
+**Changed:**
+- ⚡ **Synchronous API** - `createEditor()` now returns editor instance immediately
+- 🎯 **Industry Standard** - Matches common email editor API patterns
+- 🔄 **Background Validation** - API validation with retry logic happens non-blocking
+- 🎯 **Better UX** - Editor renders instantly, `onReady` fires after validation
 
-**New Features:**
-- Framework demos (React, Next.js, Vue, Svelte)
-- Improved test reliability
-- Better TypeScript declarations
-
-**Migration from v2.x:**
+**Migration from v3.0.x:**
 ```typescript
-// Before (v2.x)
-const editor = window.KapthaEmailEditor.createEditor({ ... });
-
-// After (v3.0.0)
+// Before (v3.0.x) - Also works in v3.2.0!
 const editor = KapthaEmailEditor.createEditor({ ... });
+
+// After (v3.2.0) - Same API!
+const editor = KapthaEmailEditor.createEditor({ 
+  ...,
+  onReady: () => console.log('Validated!'), // Called after validation
+  onError: (err) => console.error('Failed:', err)
+});
 ```
+
+**No Breaking Changes!** Code written for v3.0.x still works. Just add `onError` callback for better error handling.
 
 ## 📄 License
 
@@ -303,9 +299,10 @@ Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md)
 
 ## 📞 Support
 
-- **Email**: hello@kaptha.com
-- **Issues**: [GitHub Issues](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
-- **Docs**: [Full Documentation](https://github.com/Actovision-ORG/kaptha-email-editor-core)
+- 📧 **Email**: hello@kaptha.com
+- 🐛 **Issues**: [GitHub Issues](https://github.com/Actovision-ORG/kaptha-email-editor/issues)
+- 📚 **Docs**: [Full Documentation](https://github.com/Actovision-ORG/kaptha-email-editor-core)
+- 🔑 **API Keys**: [Console](https://app.kaptha.com)
 
 ## 🔗 Related Packages
 

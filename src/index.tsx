@@ -56,7 +56,7 @@ export interface CustomBlock {
 interface KapthaEmailEditorProps {
   /**
    * API key (required)
-   * Get your free key at: hello@kaptha.com
+   * Get your free key at: https://app.kaptha.com
    */
   apiKey: string;
   
@@ -77,7 +77,7 @@ interface KapthaEmailEditorProps {
   initialDesign?: EmailDesign;
   
   /**
-   * Callback when editor is ready
+   * Callback when editor is ready (after API key validation)
    */
   onReady?: () => void;
   
@@ -90,6 +90,11 @@ interface KapthaEmailEditorProps {
    * Callback when editor loads
    */
   onLoad?: () => void;
+  
+  /**
+   * Callback when initialization errors occur (e.g., invalid API key)
+   */
+  onError?: (error: Error) => void;
 }
 
 // Script loader utility with API wait
@@ -158,12 +163,14 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
     onReady,
     onDesignChange,
     onLoad,
+    onError,
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
   const editorInstanceRef = useRef<any>(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [validationStatus, setValidationStatus] = useState<'validating' | 'success' | 'error'>('validating');
 
   // Expose editor methods to parent via ref
   useImperativeHandle(ref, () => ({
@@ -231,28 +238,33 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
       return;
     }
 
-    try {
-      // Create editor instance using CDN API
-      editorInstanceRef.current = KapthaEmailEditor.createEditor({
-        container: containerRef.current,
-        apiKey,
-        minHeight,
-        customBlocks,
-        initialDesign,
-        onReady: () => {
-          if (onReady) {
-            onReady();
-          }
-        },
-        onChange: (design: EmailDesign) => {
-          if (onDesignChange) {
-            onDesignChange(design);
-          }
-        },
-      });
-    } catch (err: any) {
-      setError(err.message);
-    }
+    // Create editor instance using CDN API (synchronous)
+    // Validation happens in background, onReady is called after validation
+    editorInstanceRef.current = KapthaEmailEditor.createEditor({
+      container: containerRef.current,
+      apiKey,
+      minHeight,
+      customBlocks,
+      initialDesign,
+      onReady: () => {
+        setValidationStatus('success');
+        if (onReady) {
+          onReady();
+        }
+      },
+      onChange: (design: EmailDesign) => {
+        if (onDesignChange) {
+          onDesignChange(design);
+        }
+      },
+      onError: (err: Error) => {
+        setValidationStatus('error');
+        setError(err.message);
+        if (onError) {
+          onError(err);
+        }
+      },
+    });
 
     // Cleanup on unmount
     return () => {
@@ -261,21 +273,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
         editorInstanceRef.current = null;
       }
     };
-  }, [isLoaded, apiKey, minHeight, customBlocks, initialDesign]);
-
-  if (error) {
-    return (
-      <div style={{ 
-        padding: '20px', 
-        color: '#e53e3e', 
-        border: '1px solid #fc8181', 
-        borderRadius: '6px', 
-        backgroundColor: '#fff5f5' 
-      }}>
-        <strong>Error loading Kaptha Email Editor:</strong> {error}
-      </div>
-    );
-  }
+  }, [isLoaded, apiKey, minHeight, customBlocks, initialDesign, onReady, onDesignChange, onError]);
 
   if (!isLoaded) {
     return (

@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.2.0] - 2026-02-16
+
+### Changed
+- **Synchronous API**: Reverted to synchronous `createEditor()` to match email editor industry standards
+- Editor now renders immediately instead of waiting for API validation
+- API validation happens in background with retry logic (non-blocking)
+- Better user experience with instant editor rendering
+
+### Added
+- Background validation with automatic retry (3 attempts, exponential backoff)
+- Clear error UI shown in editor container when validation fails
+- Improved `onError` callback for handling validation failures
+
+### Improved
+- Updated API key registration link to https://app.kaptha.com
+- Better type safety with proper error handling
+- Simplified wrapper component (no complex async state management)
+
+### Migration Guide
+
+**No breaking changes!** The API remains compatible:
+
+```typescript
+// Works the same as v3.0.x
+const editor = KapthaEmailEditor.createEditor({
+  apiKey: 'your-api-key',
+  onReady: () => console.log('Validated!'),
+  onError: (error) => console.error('Validation failed:', error)
+});
+
+// Editor instance available immediately
+editor.loadDesign({ components: [] });
+```
+
+Key difference: Editor renders immediately, `onReady` is called after background validation completes.
+
 ## [3.0.1] - 2024-12-06
 
 ### Fixed

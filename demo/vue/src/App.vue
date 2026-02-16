@@ -1,10 +1,11 @@
 <template>
   <div>
-    <h1>Kaptha Email Editor - Vue 3 Demo</h1>
+    <h1>Kaptha Email Editor - Vue 3 Demo (v3.2.0)</h1>
     <KapthaEmailEditorWrapper
       api-key="kpt_dev_ws001_demo12345678"
       :on-ready="handleReady"
       :on-design-change="handleDesignChange"
+      :on-error="handleError"
       :custom-blocks="customBlocks"
       min-height="600px"
     />
@@ -27,6 +28,10 @@ const handleReady = () => {
 const handleDesignChange = (newDesign: any) => {
   console.log('Design changed:', newDesign);
   design.value = newDesign;
+};
+
+const handleError = (error: Error) => {
+  console.error('Editor initialization failed:', error);
 };
 
 // Define custom blocks as a constant to prevent recreation

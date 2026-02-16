@@ -47,13 +47,18 @@ export default function Home() {
     setDesign(newDesign);
   };
 
+  const handleError = (error: Error) => {
+    console.error('Editor initialization failed:', error);
+  };
+
   return (
     <main style={{ padding: '20px' }}>
-      <h1 style={{ marginBottom: '20px' }}>Kaptha Email Editor - Next.js Demo</h1>
+      <h1 style={{ marginBottom: '20px' }}>Kaptha Email Editor - Next.js Demo (v3.2.0)</h1>
       <KapthaEmailEditor
         apiKey="kpt_dev_ws001_demo12345678"
         onReady={handleReady}
         onDesignChange={handleDesignChange}
+        onError={handleError}
         customBlocks={CUSTOM_BLOCKS}
         minHeight="600px"
       />

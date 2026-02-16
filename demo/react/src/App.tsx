@@ -115,10 +115,14 @@ function App() {
     // You can save to your backend here
   };
 
+  const handleError = (error: Error) => {
+    console.error('Editor initialization failed:', error);
+  };
+
   return (
     <div className="App">
       <header>
-        <h1>Kaptha Email Editor - React Demo (v3.0.1)</h1>
+        <h1>Kaptha Email Editor - React Demo (v3.2.0)</h1>
         <p>Build beautiful emails with drag and drop - now with Custom Blocks!</p>
       </header>
       <main>
@@ -128,6 +132,7 @@ function App() {
           customBlocks={CUSTOM_BLOCKS}
           onReady={handleReady}
           onDesignChange={handleDesignChange}
+          onError={handleError}
         />
       </main>
     </div>

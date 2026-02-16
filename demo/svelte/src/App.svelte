@@ -12,6 +12,10 @@
     design = event.detail;
   }
 
+  function handleError(event: CustomEvent<Error>) {
+    console.error('Editor initialization failed:', event.detail);
+  }
+
   const customBlocks = [
     {
       id: 'svelte-welcome',
@@ -45,11 +49,12 @@
 </script>
 
 <main>
-  <h1>Kaptha Email Editor - Svelte Demo</h1>
+  <h1>Kaptha Email Editor - Svelte Demo (v3.2.0)</h1>
   <KapthaEmailEditor
     apiKey="kpt_dev_ws001_demo12345678"
     on:ready={handleReady}
     on:designChange={handleDesignChange}
+    on:error={handleError}
     {customBlocks}
     minHeight="600px"
   />
