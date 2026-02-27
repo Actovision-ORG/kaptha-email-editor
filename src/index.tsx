@@ -28,7 +28,8 @@ import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 're
 
 // CDN Configuration
 const CDN_BASE_URL = 'https://code.kaptha.dev/core/embed';
-const CACHE_VERSION = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+//const CACHE_VERSION = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+const CACHE_VERSION = Date.now(); // Format: timestamp
 const CDN_JS_URL = `${CDN_BASE_URL}/editor.js?v=${CACHE_VERSION}`;
 const CDN_CSS_URL = `${CDN_BASE_URL}/editor.css?v=${CACHE_VERSION}`;
 
