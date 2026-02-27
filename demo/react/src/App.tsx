@@ -95,7 +95,7 @@ const CUSTOM_BLOCKS = [
         id: 'text-footer',
         type: 'text',
         props: {
-          text: '<p>© 2024 Your Company. All rights reserved.</p>',
+          text: '<p>© 2026 Your Company. All rights reserved.</p>',
           fontSize: '12px',
           color: '#a0aec0',
           align: 'center'
