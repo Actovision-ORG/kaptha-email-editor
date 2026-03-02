@@ -122,7 +122,7 @@ function App() {
   return (
     <div className="App">
       <header>
-        <h1>Kaptha Email Editor - React Demo (v3.2.0)</h1>
+        <h1>Kaptha Email Editor - React Demo (v3.2.1)</h1>
         <p>Build beautiful emails with drag and drop - now with Custom Blocks!</p>
       </header>
       <main>
