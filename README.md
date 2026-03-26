@@ -310,6 +310,3 @@ Contributions welcome! See [CONTRIBUTING.md](./CONTRIBUTING.md)
 - 📚 **Docs**: [Full Documentation](https://github.com/Actovision-ORG/kaptha-email-editor-core)
 - 🔑 **API Keys**: [Console](https://app.kaptha.com)
 
-## 🔗 Related Packages
-
-- [kaptha-email-editor-core](https://github.com/Actovision-ORG/kaptha-email-editor-core) - Core editor with framework-agnostic API
