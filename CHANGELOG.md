@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [3.2.1] - 2026-03-26
+
+### Changed
+- **KEBDV-54 | feat: Wrapper Updated**: The React wrapper for Kaptha Email Editor has been updated for improved compatibility and features. See PR #1 for details.
+
 ## [3.2.0] - 2026-02-16
 
 ### Changed
@@ -41,7 +47,7 @@ editor.loadDesign({ components: [] });
 
 Key difference: Editor renders immediately, `onReady` is called after background validation completes.
 
-## [3.0.1] - 2024-12-06
+## [3.0.1] - 2025-12-06
 
 ### Fixed
 - Updated all demo applications to use published npm package instead of local workspace
@@ -53,7 +59,7 @@ Key difference: Editor renders immediately, `onReady` is called after background
 - Added v3.0.0 migration guide and changelog
 - Documented cache management with automatic date-based versioning
 
-## [3.0.0] - 2024-12-06
+## [3.0.0] - 2025-12-06
 
 ### ⚠️ BREAKING CHANGES
 
@@ -96,7 +102,7 @@ const editor = KapthaEmailEditor.createEditor({ ... });
 - Wrapper package automatically handles cache invalidation
 - Published to npm as `@actovision/kaptha-email-editor@3.0.0`
 
-## [2.1.0] - 2024-12-06
+## [2.1.0] - 2025-12-06
 
 ### Changed
 - **Architecture Refactor**: Simplified to framework-agnostic core bundle
@@ -119,7 +125,7 @@ const editor = KapthaEmailEditor.createEditor({ ... });
 - Updated all workflow references to new CDN path
 - Improved terminology consistency across documentation
 
-## [2.0.9] - 2024-12-04
+## [2.0.9] - 2025-12-04
 
 ### Fixed
 - **React 19 Support**: Fixed CDN bundle compatibility with React 19
@@ -131,7 +137,7 @@ const editor = KapthaEmailEditor.createEditor({ ... });
 - CDN URLs now include cache-busting timestamp parameter for reliable updates
 - Core workspace upgraded to React 19.2.0 as direct dependency
 
-## [2.0.0] - 2024-12-03
+## [2.0.0] - 2025-12-03
 
 ### ⚠️ BREAKING CHANGES
 
@@ -214,7 +220,7 @@ const { html, mjml } = await editorRef.current?.exportHtml();
 5. Change `height` to `minHeight`
 6. Update CDN URLs if using direct integration
 
-## [1.0.0] - 2024-11-15
+## [1.0.0] - 2025-11-15
 
 ### Added
 - Initial release
