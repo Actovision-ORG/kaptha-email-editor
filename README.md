@@ -4,6 +4,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![CodeRabbit Pull Request Reviews](https://img.shields.io/coderabbit/prs/github/Actovision-ORG/kaptha-email-editor?utm_source=oss&utm_medium=github&utm_campaign=Actovision-ORG%2Fkaptha-email-editor&labelColor=171717&color=FF570A&link=https%3A%2F%2Fcoderabbit.ai&label=CodeRabbit+Reviews)
 
+## 🆕 Latest Update
+
+**KEBDV-54 | feat: Wrapper Updated**
+
+The React wrapper for Kaptha Email Editor has been updated for improved compatibility and features. See the [latest changelog](./CHANGELOG.md) for details.
+
 > React wrapper for Kaptha Email Editor - A powerful drag-and-drop email builder with framework-agnostic core API
 
 A lightweight React component that loads Kaptha Email Editor from CDN using a self-contained JavaScript bundle. Build beautiful, responsive email templates with drag-and-drop functionality - **no React version conflicts**.
