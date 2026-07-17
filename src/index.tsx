@@ -25,6 +25,17 @@
 
 import * as React from 'react';
 import { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
+import type { EmailBuilderVariable } from './variables';
+
+// Re-export the variable system's public API from the package entry point so
+// consumers can format/replace variables (e.g. before sending an email).
+export {
+  VARIABLE_START,
+  VARIABLE_END,
+  formatEmailBuilderVariable,
+  replaceEmailBuilderVariable,
+} from './variables';
+export type { EmailBuilderVariable } from './variables';
 
 // CDN Configuration
 const CDN_BASE_URL = 'https://code.kaptha.dev/core/embed';
@@ -86,6 +97,20 @@ interface KapthaEmailEditorProps {
    * Initial design to load
    */
   initialDesign?: EmailDesign;
+
+  /**
+   * User-defined variables made available for insertion into text-based
+   * fields (Text, etc.). Provide the human-readable `label` and the raw
+   * `value` (WITHOUT delimiters) — the editor generates the `{{value}}`
+   * placeholder internally.
+   *
+   * @example
+   * variables={[
+   *   { label: "User Name", value: "user.name" },
+   *   { label: "Company Name", value: "company.name" },
+   * ]}
+   */
+  variables?: EmailBuilderVariable[];
 
   /**
    * Show the Export button in the toolbar
@@ -306,6 +331,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
     saveButton = true,
     customBlocks,
     initialDesign,
+    variables,
     onReady,
     onDesignChange,
     onSave,
@@ -326,6 +352,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
   const onErrorRef = useRef(onError);
   const initialDesignRef = useRef(initialDesign);
   const customBlocksRef = useRef(customBlocks);
+  const variablesRef = useRef(variables);
   const minHeightRef = useRef(minHeight);
   const isDarkModeRef = useRef(isDarkMode);
   const exportButtonRef = useRef(exportButton);
@@ -452,6 +479,7 @@ const KapthaEmailEditor = forwardRef<EditorMethods, KapthaEmailEditorProps>((pro
       saveButton: saveButtonRef.current,
       customBlocks: customBlocksRef.current,
       initialDesign: initialDesignRef.current,
+      variables: variablesRef.current,
       onReady: () => {
         onReadyRef.current?.();
       },
